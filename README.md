@@ -1,4 +1,3 @@
-# dsci-310-group-13
 TODO: Things to include in readme.md (TODO list should be delete after all tasks have been done.)
 - the project title: Predicting Student Exam Performance Bsed on Study Habits
 - the list of contributors/authors 
@@ -10,7 +9,8 @@ TODO: Things to include in readme.md (TODO list should be delete after all tasks
 
 # Predicting Student Exam Performance Bsed on Study Habits
 
-### Group 13 -- Adam Walmsley, Morgan Dean, Tracy Wang, Yuexiang Ni
+### DSCI 310 Group Project
+#### Group 13 -- Adam Walmsley, Morgan Dean, Tracy Wang, Yuexiang Ni
 
 
 ## Introduction
