@@ -1,21 +1,17 @@
-# dsci-310-group-13
-TODO: Things to include in readme.md
-- the project title 
+TODO: Things to include in readme.md (TODO list should be delete after all tasks have been done.)
+- the project title -- done
+- the list of contributors/authors -- done
+- a short summary of the project (view from 10,000 feet) -- done
+- how to run your data analysis 
+- a list of the dependencies needed to run your analysis -- done
+- the names of the licenses contained in LICENSE.md -- done
 
-Title: Predicting Student Exam Performance Bsed on Study Habits
+# Predicting Student Exam Performance Bsed on Study Habits
 
-- the list of contributors/authors 
+### DSCI 310 Group Project
+#### Group 13 -- Adam Walmsley, Morgan Dean, Tracy Wang, Yuexiang Ni
 
-Authors: ##To be filled
-Yuexiang Ni 
-..
-..
-..
-
-
-- a short summary of the project (view from 10,000 feet) 
-
-Introduction
+## Introduction
 
 The ability to predict student exam performance based on study habits is crucial for understanding effective learning strategies. This project examines how factors like study time (STG), study repetition (SCG), and study engagement with related objects (STR) influence a student's exam performance (LPR and PEG).
 
@@ -23,22 +19,22 @@ Using the User Knowledge Modeling Dataset, which contains exam performance data 
 
 By analyzing these relationships, our study can provide recommendations for students and educators on optimizing study methods to improve learning outcomes.
 
+### Research Question
+> Can we predict a student's exam performance (LPR or PEG) based on their study time and repetition (STG, SCG, STR)?
 
-- how to run your data analysis - a list of the dependencies needed to run your analysis 
-- the names of the licenses contained in LICENSE.md
+## How to Run the Data Analysis
+**needed to be filled**
 
+## Dependencies
+The following R libraries are required for running the analysis:
+```r
+library(tidyverse)  # Data manipulation and visualization
+library(readxl)     # Reading Excel files
+library(repr)       # Adjusting Jupyter Notebook output format
+library(tidymodels) # Machine learning modeling
+```
 
-
-
-others:
-
-Predictive Question: Can we predict a student's exam performance (LPR or PEG) based on their study time and repetition (STG, SCG, STR)?
-
-#necessary R library to load for containerization
-
-library(tidyverse)
-library(readxl)
-library(repr)
-library(tidymodels)
-
+## License 
+- MIT License
+  - For license information, refer to `LICENSE.md`.  
 
