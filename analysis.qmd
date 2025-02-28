@@ -1,8 +1,0 @@
----
-title: Predicting Student Exam Performance Based on Study Habits
-authors:
-  - Adam Walmsley
-  - Morgan Dean
-  - Tracy Wang
-  - Yuexiang Ni
----
