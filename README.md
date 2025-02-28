@@ -1,17 +1,15 @@
 TODO: Things to include in readme.md (TODO list should be delete after all tasks have been done.)
-- the project title: Predicting Student Exam Performance Bsed on Study Habits
-- the list of contributors/authors 
-- a short summary of the project (view from 10,000 feet) 
-- a reasearch question
+- the project title -- done
+- the list of contributors/authors -- done
+- a short summary of the project (view from 10,000 feet) -- done
 - how to run your data analysis 
-- a list of the dependencies needed to run your analysis 
-- the names of the licenses contained in LICENSE.md
+- a list of the dependencies needed to run your analysis -- done
+- the names of the licenses contained in LICENSE.md -- done
 
 # Predicting Student Exam Performance Bsed on Study Habits
 
 ### DSCI 310 Group Project
 #### Group 13 -- Adam Walmsley, Morgan Dean, Tracy Wang, Yuexiang Ni
-
 
 ## Introduction
 
@@ -21,15 +19,22 @@ Using the User Knowledge Modeling Dataset, which contains exam performance data 
 
 By analyzing these relationships, our study can provide recommendations for students and educators on optimizing study methods to improve learning outcomes.
 
-
 ### Research Question
 > Can we predict a student's exam performance (LPR or PEG) based on their study time and repetition (STG, SCG, STR)?
 
-#necessary R library to load for containerization
+## How to Run the Data Analysis
+**needed to be filled**
 
-library(tidyverse)
-library(readxl)
-library(repr)
-library(tidymodels)
+## Dependencies
+The following R libraries are required for running the analysis:
+```r
+library(tidyverse)  # Data manipulation and visualization
+library(readxl)     # Reading Excel files
+library(repr)       # Adjusting Jupyter Notebook output format
+library(tidymodels) # Machine learning modeling
+```
 
+## License 
+- MIT License
+  - For license information, refer to `LICENSE.md`.  
 
