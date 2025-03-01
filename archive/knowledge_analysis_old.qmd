@@ -4,23 +4,27 @@ Title: Predicting Knowledge Levels
 
 Introduction
 
-A published paper on the development of intuitive knowledge classifiers collected data on undergraduate students in the Faculty of Technology in the Department of Computer Engineering at Gazi University in October of 2009. It measured their knowledge on the subject of Electrical DC Machines using study time, study repetition and exam performance to determine their knowledge level. The data they released contains 6 total variables: the degree of study time for goal object materials, the degree of repetition number of user for goal object materials, the degree of study time of user for related object with goal object, the exam performance of user for related objects with goal object, the exam performance of user for goal objects, and finally the knowledge of the user. To simplify this data set for us to determine the knowledge level of the user, we decided to only use STG (the degree of study time for goal object materials), PEG (the exam performance of the user for goal objects), and UNS (the knowledge level of the user). In other words, from this data we can use study time, and exam performance to predict our own user’s knowledge level and test which is a better determining factor to knowledge level, study time or exam performance. We decided to use these two variables to determine user knowledge because we were curious on what mattered most for students’ knowledge level, study time or how they performed on the exam. <br/>
+A published paper on the development of intuitive knowledge classifiers collected data on undergraduate students in the Faculty of Technology in the Department of Computer Engineering at Gazi University in Turkey in October of 2009. It measured their knowledge on the subject of Electrical DC Machines using study time, study repetition and exam performance to determine their knowledge level. The data they released contains 6 total variables: the degree of study time for goal object materials, the degree of repetition number of user for goal object materials, the degree of study time of user for related object with goal object, the exam performance of user for related objects with goal object, the exam performance of user for goal objects, and finally the knowledge of the user. To simplify this data set for us to determine the knowledge level of the user, we decided to only use STG (the degree of study time for goal object materials), PEG (the exam performance of the user for goal objects), and UNS (the knowledge level of the user). In other words, from this data we can use study time, and exam performance to predict our own user’s knowledge level and test which is a better determining factor to knowledge level, study time or exam performance. We decided to use these two variables to determine user knowledge because we were curious on what mattered most for students’ knowledge level, study time or how they performed on the exam. This will also in turn let us understand if exams taken place actually evaluate what they are supposed to.<br/>
 
-Question: If a user spends a minimal time studying (< 0.2 STG) but obtains a high exam performance (> 0.9 PEG), does the user have a high knowledge level?<br/>
+##Question: If a user spends a minimal time studying (< 0.2 STG) but obtains a high exam performance (> 0.9 PEG), does the user have a high knowledge level?<br/>
+Question: Which habit/result is more indicative of a students knowledge level: the time they spent studying or their actual exam results? <br/>
 
 The dataset being used is User Knowledge Modeling Data Set and includes factors that measured the study time of more and less specific information for an exam as well as study repetition of this material. Exam performance on specific and less specific information was also measured. These factors were recorded on a scale of 0.00-1.00. These observations were then used to determine the target value of the knowledge level which was categorized with very low, low, middle and high. 
 
-Methods and Results
+# Methods and Results
 
-Preliminary exploratory data analysis:
+### Preliminary exploratory data analysis:
 
-To answer our predictive question, we began by loading the required packages, including tidyverse, readxl (as our raw data was found on an excel sheet), repr, and tidymodels.
+The dataset being used is User Knowledge Modeling Data Set and includes factors that measured the study time of more and less specific information for an exam as well as study repetition of this material. Exam performance on specific and less specific information was also measured. These factors were recorded on a scale of 0.00-1.00. These observations were then used to determine the target value of the knowledge level which was categorized with very low, low, middle and high. 
 
+To answer our question, we began by loading the required packages.
 
 ```{r install library}
 install.packages("rlang")
 install.packages("tidymodels")
 install.packages("kknn")
+install.packages("knitr")
+install.packages("rmarkdown")
 ```
 
 ```{r load library}
@@ -29,24 +33,24 @@ library(tidyverse)
 library(readxl)
 library(repr)
 library(tidymodels)
+library(readxl)
+library(knitr)
+library(rmarkdown)
 ```
 
 
-We then loaded the data set into the Juypter file. Because the data set was an excel file and came from the web, we had to use the ```download.file``` function to download and convert the data from its original format to something we could work with and analyze. The excel also contained several sheets and was already split up into training and test data, which we used to create our training and test variables. The word format was inconsistent between sheets; the training data's user knowledge level was typed in lowercase and with underscores, and the test data's user knowledge level was typed in regular case and with spaces. So to ensure consistency between data, we converted the "Very Low" value into "very_low." The data was already standarized and so this step was not required here.
+Since the data set was an excel file and came from the web, we used the ```download.file``` function to download and convert the data from its original format to something we could work with and analyze. The excel also contained several sheets and was already split up into training and test data, which we used to create our training and test variables. The word format was inconsistent between sheets; the training data's user knowledge level was typed in lowercase and with underscores, and the test data's user knowledge level was typed in regular case and with spaces. So to ensure consistency between data, we converted the "Very Low" value into "very_low." The data was already standardized and so this step was not required here.
 
 ```{r load data}
-
-#fix loading data/ either change it to read_xls or dowload it to the correct folder
-
 url <- "https://archive.ics.uci.edu/ml/machine-learning-databases/00257/Data_User_Modeling_Dataset_Hamdi%20Tolga%20KAHRAMAN.xls"
-data <- "data.xls"
-download.file(url, data)
-knowledge_train_data <- read_excel(data,2)
-knowledge_test_data <- read_excel(data,3)
+data_file <- "data/data.xls"
+download.file(url, data_file, mode = 'wb')
+knowledge_train_data <- read_excel(data_file, 2)
+knowledge_test_data <- read_excel(data_file, 3)
 knowledge_test_data[knowledge_test_data == "Very Low"] <- "very_low"
 ```
 
-With our data now loaded in, we could select the specific columns (which include our predictors and classifier variables) from the data set. These columns include the User Knowledge Level (UNS, the classification variable), Study Time for Goal Object Materials (STG, a predictor), and Exam Performance for Goal Object (PEG, another predictor). Because the UNS column contains the classification groups, we mutated this from a string to factor data type. We loaded the first couple of rows from each table to observe these changes. (See Table 1 and Table 2 below)
+With our data now loaded in, we select the specific columns (which include our predictors and classifier variables) from the data set. These columns include the User Knowledge Level (UNS, the classification variable), Study Time for Goal Object Materials (STG, a predictor), and Exam Performance for Goal Object (PEG, another predictor). Because the UNS column contains the classification groups, we mutated this from a string to factor data type. We loaded the first couple of rows from each table to observe these changes. (See Table 1 and Table 2 below)
 
 ```{r train/test split}
 knowledge_train_data <- knowledge_train_data %>%
@@ -123,6 +127,22 @@ knowledge_train_plot
 *Figure 1: Visualization of the distribution of Knowledge Levels based on Exam Performance and Study Time*
 
 #### Main Analysis and Results
+
+
+
+
+### References
+
+Kahraman, H. T., Sagiroglu, S., & Colak, I. (2012, August 21). The development of intuitive knowledge classifier and the modeling of Domain Dependent Data. Knowledge-Based Systems. Retrieved April 9, 2022, from https://www.sciencedirect.com/science/article/abs/pii/S0950705112002225?via%3Dihub <br/>
+
+Kahraman, H. T., Sagiroglu, S., &amp; Colak, I. (2013, June 26). User knowledge modeling data set. UCI Machine Learning Repository. Retrieved April 9, 2022, from https://archive.ics.uci.edu/ml/datasets/User+Knowledge+Modeling# 
+
+Timbers, T., Campbell, T., & Lee, M. (2022, March 2). Chapter 5 Classification I: training & predicting. Data science: A First Introduction. Retrieved April 9, 2022, from https://datasciencebook.ca/classification.html <br/>
+
+Timbers, T., Campbell, T., & Lee, M. (2022, March 2). Chapter 6 Classification II: evaluation & tuning. Data science: A First Introduction. Retrieved April 9, 2022, from https://datasciencebook.ca/classification2.html 
+
+## DELETE LATER
+## OLD MAIN ANALYSIS, RESULTS AND DISCUSSION 
 
 This wraps up our preliminary wrangling and analysis of the data. With this exploratory summarization, we were now ready to move on to the main data analysis and ultimately answer the predictive question we formulated prior. As this was a classification problem, we had to start by setting a seed to make our work reproducible. After that was done, we moved on to tuning our classifier. This required us to make a recipe based on our training data and cross-validating the different K values to find the most accurate one to use in our classification analysis. We used five folds in the cross-validation step and tested k-nearest-neighbor values from 1 to 15. We then isolated the accuracy values and produced a plot of these accuracies again their specified K value. From Figure 2 below, we can see K values from 5 to 8 are consistently accurate. Still, the most precise result occurred when 12 neighbors were used, which is the value we decided to use for further classifications.
 
@@ -244,15 +264,3 @@ final_plot
 The final plot from this analysis shows that students with a low degree of study time, but high exam performance, will be classified as “High” knowledge level. By viewing the final scatter plot, it can be seen that exam performance is generally a better predictor for knowledge level than the degree of study time, and this is especially true for points on the extremes (high or very low), and less accurate in the middle (low and middle). When random points of low study time as defined as less than 0.2 STG and high exam performance of higher than 0.9 PEG were selected, they were all classified as a high level of knowledge. This model had a prediction accuracy of 0.79, found by dividing the number or correct predictions by the number of correct predictions. A prediction accuracy of 79% is reasonable for this data set because the data set is not very large and this prediction does not have high stakes. That is to say, if this model predicts someone’s knowledge level wrong, this does not have large implications on their life, as this is just reflecting their knowledge of one specific subject, which cannot be said about all prediction models, such as tumor classification models. Another aspect that makes the stakes of this prediction lower is that the students in this are generally aware of how much they study, and their exam scores, with which they can gauge how they feel about their learning. Not every student will care how they are classified as everyone has different expectations in school and for specific courses, but knowing whether your tumor is malignant or benign has much higher stakes and needs for you to be aware of which it is and is not something that the average person can guess at. That said, this model was the most accurate when predicting high points, which is what we are studying, likely making the predictions for high levels of knowledge more accurate. <br/>
 
 These results agree with what was expected of this study, that high exam performance and low study time will be classified as high knowledge level. This was expected because to score high on an exam, the student must have a reasonably high knowledge of the subject regardless of their study time. Since all of the points selected agreed with our hypothesis, it is true of this dataset that low study time with high exam performance is categorized as a high level of knowledge. These findings could suggest to future students of Electrical DC machines at Gazi University, that if they can score high on tests without studying much, they will be considered to have a high knowledge of the subject. This could result in confident students not studying much, as they expect their knowledge level to stay the same even if they don’t study. Though this is not problematic if they do end up scoring well on the exams, if they over-predicted their understanding of the subject and scored lower, their knowledge level will likely reflect this. This analysis could lead to questions about whether exam performance is a better indicator of knowledge level overall and about how study time affects exam performance. Both of these could give a better understanding of how knowledge of this subject is determined and the various factors that impact it. Knowing this could help students to get the most out of their studying of this subject and maximize learning and knowledge. 
-
-
-### References
-
-Kahraman, H. T., Sagiroglu, S., & Colak, I. (2012, August 21). The development of intuitive knowledge classifier and the modeling of Domain Dependent Data. Knowledge-Based Systems. Retrieved April 9, 2022, from https://www.sciencedirect.com/science/article/abs/pii/S0950705112002225?via%3Dihub <br/>
-
-Kahraman, H. T., Sagiroglu, S., &amp; Colak, I. (2013, June 26). User knowledge modeling data set. UCI Machine Learning Repository. Retrieved April 9, 2022, from https://archive.ics.uci.edu/ml/datasets/User+Knowledge+Modeling# 
-
-Timbers, T., Campbell, T., & Lee, M. (2022, March 2). Chapter 5 Classification I: training & predicting. Data science: A First Introduction. Retrieved April 9, 2022, from https://datasciencebook.ca/classification.html <br/>
-
-Timbers, T., Campbell, T., & Lee, M. (2022, March 2). Chapter 6 Classification II: evaluation & tuning. Data science: A First Introduction. Retrieved April 9, 2022, from https://datasciencebook.ca/classification2.html 
-
