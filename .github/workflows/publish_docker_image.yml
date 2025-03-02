@@ -9,9 +9,8 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - 'Dockerfile'
+      - "Dockerfile"
       - .github/workflows/publish_docker_image.yml # or whatever you named the file
-      - 'conda-linux-64.lock'
 
 jobs:
   push_to_registry:
@@ -44,3 +43,4 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+

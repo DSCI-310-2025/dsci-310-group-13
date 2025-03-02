@@ -8,12 +8,6 @@ ENV RENV_PATHS_ROOT=/home/rstudio/renv
 RUN mkdir -p /home/rstudio/renv
 
 # Set working directory
-WORKDIR /home/rstudio
-
-# Copy analysis to the docker container
-COPY analysis.qmd analysis.qmd
-
-# Set working directory
 WORKDIR /home/rstudio/renv
 
 # Copy only renv.lock and activate.R first to cache dependency installation
@@ -22,20 +16,20 @@ COPY renv/activate.R renv/activate.R
 
 # Install required system dependencies
 RUN apt-get update && apt-get install -y \
-    libcurl4-openssl-dev \
-    libssl-dev \
-    libxml2-dev \
-    libharfbuzz-dev \
-    libfribidi-dev \
-    libgit2-dev \
-    libfontconfig1-dev \
-    libfreetype6-dev \
-    libpng-dev \
-    libtiff5-dev \
-    libjpeg-dev \
-    libbz2-dev \
-    zlib1g-dev \
-    pkg-config
+  libcurl4-openssl-dev \
+  libssl-dev \
+  libxml2-dev \
+  libharfbuzz-dev \
+  libfribidi-dev \
+  libgit2-dev \
+  libfontconfig1-dev \
+  libfreetype6-dev \
+  libpng-dev \
+  libtiff5-dev \
+  libjpeg-dev \
+  libbz2-dev \
+  zlib1g-dev \
+  pkg-config
 
 # Install renv and restore packages
 RUN R -e "install.packages('renv', repos='https://cloud.r-project.org')"
