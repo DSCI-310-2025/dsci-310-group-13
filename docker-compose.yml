@@ -5,6 +5,8 @@ services:
       - "8787:8787"
     volumes:
       - .:/home/rstudio
+      - /home/rstudio/renv # except the renv directory, ignore that
     environment:
       PASSWORD: "password"
       DISABLE_AUTH: true
+
