@@ -1,0 +1,10 @@
+services:
+  analysis-env:
+    image: tracywxr/dsci310-project
+    ports:
+      - "8787:8787"
+    volumes:
+      - .:/home/rstudio
+    environment:
+      PASSWORD: "password"
+      DISABLE_AUTH: true
