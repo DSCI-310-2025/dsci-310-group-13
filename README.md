@@ -39,13 +39,7 @@ By analyzing these relationships, our study can provide recommendations for stud
 
 To run the data analysis, follow these steps:
 
-1. Clone the repository to your local machine:
-```bash
-git clone https://github.com/DSCI-310-2025/dsci-310-group-13.git
-cd dsci-310-group-13/
-```
-
-2. Run the container with RStudio (default password: password)
+2. **Run the container with RStudio**
 ```bash
 docker run -p 8787:8787 -e PASSWORD=password tracywxr/dsci310-project
 ```
@@ -54,32 +48,32 @@ docker run -p 8787:8787 -e PASSWORD=password tracywxr/dsci310-project
   - Username: `rstudio`
   - Password: `password`
 
-3. Run the Analysis
+3. **Run the Analysis**
 - Open `analysis.qmd` in RStudio
 - Run the analysis inside RStudio
 
-4. (Optional) Using Docker Compose If you prefer Docker Compose, run:
+4. **(Optional) Using Docker Compose** If you prefer Docker Compose, run:
 ```bash
 docker-compose up
 ```
 This will automatically start the container.
 
 ### **Option 2: Running Locally (without Docker)**
-1. Clone the repository to your local machine:
+1. **Clone the repository to your local machine**:
 ```bash
 git clone https://github.com/DSCI-310-2025/dsci-310-group-13.git
 cd dsci-310-group-13/
 ```
 
-2. Open R or RStudio, and navigate to the project directory.
+2. **Open R or RStudio, and navigate to the project directory.**
 
-3. Activate the R environment by running:
+3. **Activate the R environment by running**:
 ```bash
 renv::restore()
 ```
 This will install all necessary dependencies listed in `renv.lock`.
 
-4. Run the analysis script:
+4. **Run the analysis script**:
 - Open analysis.qmd in RStudio
 - Run the analysis inside RStudio
 
@@ -122,5 +116,5 @@ renv::init()
 
 ## License
 
-- MIT License
+- This project is licensed under the **MIT License**.
   - For license information, refer to `LICENSE.md`.  
