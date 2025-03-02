@@ -22,7 +22,7 @@ Using the User Knowledge Modeling Dataset, which contains exam performance data 
 By analyzing these relationships, our study can provide recommendations for students and educators on optimizing study methods to improve learning outcomes.
 
 ### Research Question
->
+
 > Can we predict a student's exam performance (LPR or PEG) based on their study time and repetition (STG, SCG, STR)?
 
 ## Development
@@ -47,7 +47,33 @@ renv::init()
 
 ## How to Run the Data Analysis
 
-**needed to be filled**
+To run the data analysis, follow these steps:
+
+1. Clone the repository to your local machine:
+```bash
+git clone https://github.com/DSCI-310-2025/dsci-310-group-13.git
+cd dsci-310-group-13/
+```
+
+2. Open R or RStudio, and navigate to the project directory.
+
+Activate the R environment by running:
+
+renv::restore()
+
+This will install all necessary dependencies listed in renv.lock.
+
+3. Run the analysis script:
+
+If using Quarto, render the document with:
+
+qoc
+
+View the results:
+
+The output will be saved as an HTML or PDF file in the project directory.
+
+
 
 ## Dependencies
 
