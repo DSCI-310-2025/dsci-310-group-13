@@ -1,12 +1,3 @@
-TODO: Things to include in readme.md (TODO list should be delete after all tasks have been done.)
-
-- the project title -- done
-- the list of contributors/authors -- done
-- a short summary of the project (view from 10,000 feet) -- done
-- how to run your data analysis
-- a list of the dependencies needed to run your analysis -- done
-- the names of the licenses contained in LICENSE.md -- done
-
 # Predicting Student Exam Performance Bsed on Study Habits 
 
 ## Contributors
@@ -40,9 +31,9 @@ By analyzing these relationships, our study can provide recommendations for stud
 To run the data analysis, follow these steps:
 
 2. **Run the container with RStudio**
-```bash
-docker run -p 8787:8787 -e PASSWORD=password tracywxr/dsci310-project
-```
+   ```bash
+   docker run -p 8787:8787 -e PASSWORD=password tracywxr/dsci310-project
+   ```
 - This will start an RStudio Server at http://localhost:8787
 - Login using:
   - Username: `rstudio`
@@ -53,24 +44,24 @@ docker run -p 8787:8787 -e PASSWORD=password tracywxr/dsci310-project
 - Run the analysis inside RStudio
 
 4. **(Optional) Using Docker Compose** If you prefer Docker Compose, run:
-```bash
-docker-compose up
-```
+   ```bash
+   docker-compose up
+   ```
 This will automatically start the container.
 
 ### **Option 2: Running Locally (without Docker)**
 1. **Clone the repository to your local machine**:
-```bash
-git clone https://github.com/DSCI-310-2025/dsci-310-group-13.git
-cd dsci-310-group-13/
-```
+   ```bash
+   git clone https://github.com/DSCI-310-2025/dsci-310-group-13.git
+   cd dsci-310-group-13/
+   ```
 
 2. **Open R or RStudio, and navigate to the project directory.**
 
 3. **Activate the R environment by running**:
-```bash
-renv::restore()
-```
+   ```bash
+   renv::restore()
+   ```
 This will install all necessary dependencies listed in `renv.lock`.
 
 4. **Run the analysis script**:
