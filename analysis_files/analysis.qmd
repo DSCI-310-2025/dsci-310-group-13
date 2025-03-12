@@ -168,6 +168,7 @@ predicted_classes <- factor(predicted_classes,
 # Model accuracy
 mean(predicted_classes == knowledge_test_data$UNS)
 ```
+*Table 7: Model Accuracy*
 
 Our model produces a mean accuracy of 82% which is promising. This means that really only using exam grade as a feature allows ordinal regression to achieve high accuracy across this complex problem.
 

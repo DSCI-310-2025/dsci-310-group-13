@@ -1,0 +1,17 @@
+Call:
+polr(formula = UNS ~ STG + PEG, data = knowledge_train_data, 
+    Hess = TRUE)
+
+Coefficients:
+      Value Std. Error t value
+STG  0.4481     0.8315  0.5389
+PEG 23.3257     2.4173  9.6495
+
+Intercepts:
+             Value   Std. Error t value
+very_low|Low  2.6636  0.5232     5.0912
+Low|Middle    8.3128  0.8372     9.9291
+Middle|High  16.0228  1.6559     9.6762
+
+Residual Deviance: 232.5871 
+AIC: 242.5871 
