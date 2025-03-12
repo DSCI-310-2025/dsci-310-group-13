@@ -32,6 +32,7 @@ install.packages("MASS")
 install.packages("reshape2")
 install.packages("ggplot2")
 install.packages("caret")
+install.packages("docopt")
 ```
 
 ```{r load library}
@@ -45,13 +46,14 @@ library(rmarkdown)
 library(MASS)
 library(ggplot2)
 library(caret)
+library(docopt)
 ```
 
 Since the data set was an excel file and came from the web, we used the ```download.file``` function to download and convert the data from its original format to something we could work with and analyze. The excel also contained several sheets and was already split up into training and test data, which we used to create our training and test variables. The word format was inconsistent between sheets; the training data's user knowledge level was typed in lowercase and with underscores, and the test data's user knowledge level was typed in regular case and with spaces. So to ensure consistency between data, we converted the "Very Low" value into "very_low." The data was already standardized and so this step was not required here.
 
 ```{r load data}
 url <- "https://archive.ics.uci.edu/ml/machine-learning-databases/00257/Data_User_Modeling_Dataset_Hamdi%20Tolga%20KAHRAMAN.xls"
-data_file <- "data/data.xls"
+data_file <- "../data/data.xls"
 download.file(url, data_file, mode = 'wb')
 knowledge_train_data <- read_excel(data_file, 2)
 knowledge_test_data <- read_excel(data_file, 3)
