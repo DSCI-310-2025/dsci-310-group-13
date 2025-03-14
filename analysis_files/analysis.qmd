@@ -1,5 +1,14 @@
 ---
 title: "Predicting and Understanding what leads to High Knowledge Levels"
+author: "(fill in your names) Yuexiang Ni"
+format:
+  html:
+    toc: true  # Enables automatic table of contents
+    toc-title: "Table of Contents"
+    number-sections: true  # Numbers the sections
+    fig-cap-location: top
+bibliography: references.bib
+editor: source
 ---
 
 # Summary
@@ -21,7 +30,7 @@ The dataset being used is User Knowledge Modeling Data Set and includes factors 
 
 To begin answering our question, we began by loading the required packages.
 
-```{r install library}
+```{r install library, echo=FALSE}
 install.packages("rlang")
 install.packages("tidymodels")
 install.packages("kknn")
@@ -35,7 +44,7 @@ install.packages("caret")
 install.packages("docopt")
 ```
 
-```{r load library}
+```{r load library, echo=FALSE}
 library(kknn)
 library(tidyverse)
 library(repr)
@@ -51,7 +60,7 @@ library(docopt)
 
 Since the data set was an excel file and came from the web, we used the ```download.file``` function to download and convert the data from its original format to something we could work with and analyze. The excel also contained several sheets and was already split up into training and test data, which we used to create our training and test variables. The word format was inconsistent between sheets; the training data's user knowledge level was typed in lowercase and with underscores, and the test data's user knowledge level was typed in regular case and with spaces. So to ensure consistency between data, we converted the "Very Low" value into "very_low." The data was already standardized and so this step was not required here.
 
-```{r load data}
+```{r load data, echo=FALSE}
 url <- "https://archive.ics.uci.edu/ml/machine-learning-databases/00257/Data_User_Modeling_Dataset_Hamdi%20Tolga%20KAHRAMAN.xls"
 data_file <- "../data/data.xls"
 download.file(url, data_file, mode = 'wb')
@@ -62,7 +71,7 @@ knowledge_test_data[knowledge_test_data == "Very Low"] <- "very_low"
 
 With our data now loaded in, we select the specific columns (which include our predictors and classifier variables) from the data set. These columns include the User Knowledge Level (UNS, the classification variable), Study Time for Goal Object Materials (STG, a predictor), and Exam Performance for Goal Object (PEG, another predictor). Because the UNS column contains the classification groups, we mutated this from a string to an ordinal factor data type. We loaded the first couple of rows from each table to observe these changes. (See Table 1 and Table 2 below)
 
-```{r create train/test split}
+```{r create train/test split, echo=FALSE}
 
 knowledge_train_data <- knowledge_train_data %>%
     mutate(UNS = factor(UNS, 
@@ -80,19 +89,19 @@ knowledge_test_data <- knowledge_test_data %>%
 
 ```
 
-```{r Display Train}
+```{r Display Train, echo=FALSE}
 head(knowledge_train_data)
 ```
 
 *Table 1: First six rows of the Training Data <br/>
-```{r Display Test}
+```{r Display Test, echo=FALSE}
 head(knowledge_test_data)
 ```
 *Table 2: First six rows of the Testing Data*
 
 Next, we wanted to see the distribution of knowledge levels within the training and testing data, so we grouped the data by the knowledge level, found their counts, and then calculated the percent of each class. From Table 3, we can see that 9% of users have a very low knowledge level, 24% have a high knowledge level, 32% have a low knowledge level, and 34% have a middle knowledge level. Table 4 (testing data) on the other hand, shows that 18% of users have a very low knowledge level, 27% have a high knowledge level, 32% have a low knowledge level, and 23% have a middle knowledge level. We will have to keep these differences in mind during the randomization process and as we conduct further analysis.
 
-```{r train data info}
+```{r train data info, echo=FALSE}
 num_obs <- nrow(knowledge_train_data)
 know_percentage_train <- knowledge_train_data %>%
   group_by(UNS) %>%
@@ -103,7 +112,7 @@ know_percentage_train
 ```
 *Table 3: Count and Percent of User Knowledge Levels in the training data.*
 
-```{r test data info}
+```{r test data info, echo=FALSE}
 num_obs2 <- nrow(knowledge_test_data)
 know_percentage_test <- knowledge_test_data %>%
   group_by(UNS) %>%
@@ -116,7 +125,7 @@ know_percentage_test
 
 We still wanted to understand our data a bit more. To do so, we wrangled the training data a bit more to generate a table of the mean STG and PEG and the minimum and maximum values of the predictors for each knowledge level. This helped us get a sense of the boundaries for each class and the variance within each predictor (See Table 5 below).
 
-```{r summarize data}
+```{r summarize data, echo=FALSE}
 knowledge_train_summary <- knowledge_train_data %>%
     group_by(UNS) %>%
     summarize(count = n(), 
@@ -132,7 +141,7 @@ knowledge_train_summary
 
 All these tables helped us understand the data but still required attentive interpretation. So we now created a visualization of the User Knowledge Level distribution based on the Exam Performance and Study Time variables. The plot below shows how the knowledge levels are stacked vertically like layers, where study time can vary from 0 to 1 for each class, but the exam performance imposes somewhat of a boundary on each category (See Figure 1 below).
 
-```{r EDA create scatter plot}
+```{r EDA create scatter plot, echo=FALSE}
 options(repr.plot.width=10, repr.plot.height=6)
 knowledge_train_plot <- knowledge_train_data %>%
     ggplot(aes(x=STG, y= PEG, colour = UNS)) +
@@ -149,17 +158,17 @@ knowledge_train_plot
 
 In this analysis we chose to use the machine learning method of ordinal logistic regression. Since this is a multi classification problem we could not use simple binary logistic regression. We begin by fitting our model and looking at the coefficients on each feature.
 
-```{r Fit Model}
+```{r Fit Model, echo=FALSE}
 ordinal_model <- polr(UNS ~ STG + PEG, data = knowledge_train_data, Hess = TRUE)
 ```
-```{r Summary of fit}
+```{r Summary of fit, echo=FALSE}
 summary(ordinal_model)
 ```
 *Table 6: Summary across included features in our fitted model*
 
 From table 6 we see that exam performance has a coefficient nearly fifty times the degree of study indicating the feature is much more indicative of user knowledge. Now we have to see if this model performs well on the test data
 
-```{r Predict on test data}
+```{r Predict on test data, echo=FALSE}
 predicted_classes <- predict(ordinal_model, newdata = knowledge_test_data)
 predicted_classes <- factor(predicted_classes, 
                             levels = levels(knowledge_test_data$UNS), 
@@ -174,7 +183,7 @@ Our model produces a mean accuracy of 82% which is promising. This means that re
 
 Next we produce some visualizations to get a better sense of the data.
 
-```{r Visualization of Confusion Matrix}
+```{r Visualization of Confusion Matrix, echo=FALSE}
 predicted_classes <- predict(ordinal_model, newdata = knowledge_test_data)
 
 predicted_classes <- factor(predicted_classes, levels = levels(knowledge_test_data$UNS))
@@ -196,7 +205,7 @@ ggplot(conf_matrix_df, aes(x = Actual, y = Predicted, fill = Freq)) +
 
 This confusion matrix tells us where our model is predicting correctly and incorrectly, as well as the frequency to which it does that. We can see that across all possible classes it is fairly successful with some slight confusion being introduced when comparing the 'low' and 'very low' classes.
 
-```{r Visualization of Feature Importance}
+```{r Visualization of Feature Importance, echo=FALSE}
 odds_ratios <- exp(coef(ordinal_model)) 
 
 feature_importance <- data.frame(
@@ -224,3 +233,6 @@ The impacts this study could bring about are vast. By performing a similar resul
 In the future this could lead to questions regarding what else is indicative of user knowledge other than exam performance. Are there other indicators more important than exam performance?
 
 We would also like to state that to improve this studies reliability we could make some or all of the following improvements. We could use cross validation to increase the confidence of our results, include more features to build a more robust and accurate model, and test out other regression techniques.
+
+# Reference
+@
