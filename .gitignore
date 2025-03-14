@@ -53,3 +53,5 @@ rsconnect/
 .local
 
 .DS_store
+
+.ipynb_checkpoints
