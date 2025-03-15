@@ -60,3 +60,5 @@ rsconnect/
 data
 # results dir
 results
+
+.sh_history
