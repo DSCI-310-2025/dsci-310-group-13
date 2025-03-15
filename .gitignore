@@ -55,3 +55,8 @@ rsconnect/
 .DS_store
 
 .ipynb_checkpoints
+
+# data dir
+data
+# results dir
+results
