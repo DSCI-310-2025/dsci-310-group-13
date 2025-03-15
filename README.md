@@ -107,6 +107,5 @@ docker compose up -d
 
 - This project is licensed under the **MIT License**.
   - For license information, refer to `LICENSE.md`.
-- All images are under the **Creative Commons License**
-
-[![CC](https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by.png)](hhttps://creativecommons.org/licenses/by/4.0/ttp://google.com.au/)
+- All non-code items are under the **Creative Commons License 4.0**
+  - [![CC](https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by.png)](hhttps://creativecommons.org/licenses/by/4.0/ttp://google.com.au/)
