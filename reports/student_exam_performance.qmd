@@ -16,7 +16,7 @@ execute:
   echo: false
   warning: false
   message: false
-  error: true
+  error: false
 ---
 
 ## **Summary**
@@ -85,13 +85,16 @@ knowledge_test_data <- knowledge_test_data %>%
 ```{r Display Train}
 #| label: tbl-knowledge_train_data
 #| tbl-cap: "First six rows of the Training Data"
-head(knowledge_train_data)
+
+knowledge_train_data <- read_csv("../results/table1.csv")
+knitr::kable(knowledge_train_data)
 ```
 
 ```{r Display Test}
 #| label: tbl-knowledge_test_data
 #| tbl-cap: "First six rows of the Testing Data"
-head(knowledge_test_data)
+knowledge_test_data <- read_csv("../results/table2.csv")
+knitr::kable(knowledge_test_data)
 ```
 
 Next, we wanted to see the distribution of knowledge levels within the training and testing data, so we grouped the data by the knowledge level, found their counts, and then calculated the percent of each class. From @tbl-know_percentage_train, we can see that 9% of users have a very low knowledge level, 24% have a high knowledge level, 32% have a low knowledge level, and 34% have a middle knowledge level. @tbl-know_percentage_test (testing data) on the other hand, shows that 18% of users have a very low knowledge level, 27% have a high knowledge level, 32% have a low knowledge level, and 23% have a middle knowledge level. We will have to keep these differences in mind during the randomization process and as we conduct further analysis.
@@ -99,25 +102,15 @@ Next, we wanted to see the distribution of knowledge levels within the training 
 ```{r train data info}
 #| label: tbl-know_percentage_train
 #| tbl-cap: "Count and Percent of User Knowledge Levels in the training data."
-num_obs <- nrow(knowledge_train_data)
-know_percentage_train <- knowledge_train_data %>%
-  group_by(UNS) %>%
-  summarize(
-    count = n(),
-    percentage = n() / num_obs * 100 )
-know_percentage_train
+know_percentage_train <- read_csv("../results/table3.csv")
+knitr::kable(know_percentage_train)
 ```
 
 ```{r test data info}
 #| label: tbl-know_percentage_test
 #| tbl-cap: "Count and Percent of User Knowledge Levels in the testing data."
-num_obs2 <- nrow(knowledge_test_data)
-know_percentage_test <- knowledge_test_data %>%
-  group_by(UNS) %>%
-  summarize(
-    count = n(),
-    percentage = n() / num_obs2 * 100 )
-know_percentage_test
+know_percentage_test <- read_csv("../results/table4.csv")
+knitr::kable(know_percentage_test)
 ```
 
 We still wanted to understand our data a bit more. To do so, we wrangled the training data a bit more to generate a table of the mean STG and PEG and the minimum and maximum values of the predictors for each knowledge level. This helped us get a sense of the boundaries for each class and the variance within each predictor (See @tbl-knowledge_train_summary below).
@@ -125,33 +118,13 @@ We still wanted to understand our data a bit more. To do so, we wrangled the tra
 ```{r summarize data}
 #| label: tbl-knowledge_train_summary
 #| tbl-cap: "Means, Minimums, and Maximums of Selected Variables in Training Data"
-knowledge_train_summary <- knowledge_train_data %>%
-    group_by(UNS) %>%
-    summarize(count = n(), 
-              mean_STG = mean(STG), 
-              mean_PEG = mean(PEG),
-             max_STG = max(STG), 
-              max_PEG = max(PEG),
-             min_STG = min(STG), 
-              min_PEG = min(PEG))
-knowledge_train_summary
+knowledge_train_summary <- read_csv("../results/table5.csv")
+knitr::kable(knowledge_train_summary)
 ```
 
 All these tables helped us understand the data but still required attentive interpretation. So we now created a visualization of the User Knowledge Level distribution based on the Exam Performance and Study Time variables. The plot below shows how the knowledge levels are stacked vertically like layers, where study time can vary from 0 to 1 for each class, but the exam performance imposes somewhat of a boundary on each category (See @fig-knowledge_train_summary below).
 
-```{r EDA create scatter plot}
-#| label: fig-knowledge_train_summary
-#| fig-cap: "Visualization of the distribution of Knowledge Levels based on Exam Performance and Study Time"
-options(repr.plot.width=10, repr.plot.height=6)
-knowledge_train_plot <- knowledge_train_data %>%
-    ggplot(aes(x=STG, y= PEG, colour = UNS)) +
-        labs(x = "Degree of study time",
-             y = "Exam performance",
-            colour = 'Knowledge Level of Users') +
-        geom_point() +
-        theme(text = element_text(size = 20))
-knowledge_train_plot
-```
+![Visualization of the distribution of Knowledge Levels based on Exam Performance and Study Time.](../results/fig1.png){#fig-knowledge_train_summary width=80%}
 
 ### Main Analysis and Results
 
@@ -160,10 +133,8 @@ In this analysis we chose to use the machine learning method of ordinal logistic
 ```{r Fit Model}
 #| label: tbl-ordinal_model
 #| tbl-cap: "Summary across included features in our fitted model"
-ordinal_model <- polr(UNS ~ STG + PEG, data = knowledge_train_data, Hess = TRUE)
-```
-```{r Summary of fit}
-summary(ordinal_model)
+ordinal_model <- read_csv("../results/table6.txt")
+knitr::kable(ordinal_model)
 ```
 
 From @tbl-ordinal_model we see that exam performance has a coefficient nearly fifty times the degree of study indicating the feature is much more indicative of user knowledge. Now we have to see if this model performs well on the test data
@@ -171,59 +142,19 @@ From @tbl-ordinal_model we see that exam performance has a coefficient nearly fi
 ```{r Predict on test data}
 #| label: tbl-accuracy
 #| tbl-cap: "Model Accuracy"
-predicted_classes <- predict(ordinal_model, newdata = knowledge_test_data)
-predicted_classes <- factor(predicted_classes, 
-                            levels = levels(knowledge_test_data$UNS), 
-                            ordered = TRUE)
-
-# Model accuracy
-mean(predicted_classes == knowledge_test_data$UNS)
+accuracy <- read_csv("../results/table7.txt")
+knitr::kable(accuracy)
 ```
 
 Our model produces a mean accuracy of 82% which is promising (see @tbl-accuracy). This means that really only using exam grade as a feature allows ordinal regression to achieve high accuracy across this complex problem.
 
 Next we produce some visualizations to get a better sense of the data.
 
-```{r Visualization of Confusion Matrix}
-#| label: fig-confusion_matrix
-#| fig-cap: "Confusion Matrix"
-predicted_classes <- predict(ordinal_model, newdata = knowledge_test_data)
-
-predicted_classes <- factor(predicted_classes, levels = levels(knowledge_test_data$UNS))
-
-conf_matrix <- table(Predicted = predicted_classes, Actual = knowledge_test_data$UNS)
-
-conf_matrix_df <- as.data.frame(conf_matrix)
-
-ggplot(conf_matrix_df, aes(x = Actual, y = Predicted, fill = Freq)) +
-  geom_tile() +
-  geom_text(aes(label = Freq), color = "white", size = 5) +
-  scale_fill_gradient(low = "lightblue", high = "darkblue") +
-  labs(title = "Confusion Matrix of Ordinal Logistic Regression",
-       x = "Actual UNS Category",
-       y = "Predicted UNS Category") +
-  theme_minimal()
-```
+![Confusion Matrix](../results/fig2.png){#fig-confusion_matrix width=80%}
 
 This confusion matrix (@fig-confusion_matrix) tells us where our model is predicting correctly and incorrectly, as well as the frequency to which it does that. We can see that across all possible classes it is fairly successful with some slight confusion being introduced when comparing the 'low' and 'very low' classes.
 
-```{r Visualization of Feature Importance}
-#| label: fig-feature_inportance
-#| fig-cap: "Feature Importance"
-odds_ratios <- exp(coef(ordinal_model)) 
-
-feature_importance <- data.frame(
-  Feature = names(odds_ratios),
-  Importance = odds_ratios
-)
-
-ggplot(feature_importance, aes(x = Feature, y = Importance, fill = Feature)) +
-  geom_bar(stat = "identity") +
-  labs(title = "Feature Importance in Ordinal Logistic Regression",
-       y = "Odds Ratio (Feature Importance)") +
-  theme_minimal() +
-  scale_fill_viridis_d()
-```
+![Feature Importance](../results/fig3.png){#fig-feature_inportance width=80%}
 
 In @fig-feature_inportance we again look at how much importance our model gave to each of the features we included. As seen during fitting, exam grades is given the vast majority of the weighting and is practically the sole predictor for our model.
 
