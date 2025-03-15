@@ -26,6 +26,7 @@ By analyzing these relationships, our study can provide recommendations for stud
 ### **Option 1: Using Docker (Recommended)**
 
 1. **Pull the latest pre-built Docker image from Docker Hub:**
+
    ```bash
    docker pull tracywxr/dsci310-project:latest
    ```
@@ -33,11 +34,12 @@ By analyzing these relationships, our study can provide recommendations for stud
 To run the data analysis, follow these steps:
 
 2. **Run the container with RStudio**
+
    ```bash
    docker run -p 8787:8787 -e PASSWORD=password tracywxr/dsci310-project
    ```
 
-- This will start an RStudio Server at http://localhost:8787
+- This will start an RStudio Server at <http://localhost:8787>
 - Login using:
   - Username: `rstudio`
   - Password: `password`
@@ -99,13 +101,79 @@ library(caret)      # Classification and Regression Training
 docker compose up -d
 ```
 
-2. Access the RStudio instance in your browser at http://localhost:8787
+2. Access the RStudio instance in your browser at <http://localhost:8787>
 
 3. Write code in `reports/student_exam_performance.qmd`
+
+## Running the Scripts
+
+This project includes several R scripts in the `scripts` directory that handle different stages of the data analysis pipeline. Below are instructions for running each script.
+
+### 1. Data Loading (`01_load.R`)
+
+This script downloads the dataset from a URL and saves it locally.
+
+**Usage:**
+
+```R
+Rscript scripts/01_load.R --url="https://archive.ics.uci.edu/ml/machine-learning-databases/00257/Data_User_Modeling_Dataset_Hamdi%20Tolga%20KAHRAMAN.xls" --output_path="data/data.xls"
+```
+
+**Parameters:**
+
+- `--url`: URL to download the dataset from
+- `--output_path`: Path where the downloaded file will be saved
+
+### 2. Data Cleaning (`02_read-clean.R`)
+
+This script reads the downloaded data and performs cleaning operations.
+
+**Usage:**
+
+```R
+Rscript scripts/02_read-clean.R --file_path="data/data.xls" --output_path="data/clean/data.xls"
+```
+
+**Parameters:**
+
+- `--file_path`: Path to the input data file
+- `--output_path`: Path where the cleaned data will be saved
+
+### 3. Exploratory Data Analysis (`03_eda.R`)
+
+This script performs exploratory data analysis, generating tables and visualizations.
+
+**Usage:**
+
+```R
+Rscript scripts/03_eda.R --file_path="data/clean/data.xls" --table1="results/table1.csv" --table2="results/table2.csv" --table3="results/table3.csv" --table4="results/table4.csv" --table5="results/table5.csv" --fig1="results/fig1.png"
+```
+
+**Parameters:**
+
+- `--file_path`: Path to the cleaned data file
+- `--table1` to `--table5`: Paths where the generated tables will be saved
+- `--fig1`: Path where the generated figure will be saved
+
+### 4. Modeling (`04_modelling.R`)
+
+This script builds and evaluates a predictive model, generating result tables and visualizations.
+
+**Usage:**
+
+```R
+Rscript scripts/04_modelling.R --file_path="data/clean/data.xls" --table6="results/table6.txt" --table7="results/table7.txt" --fig2="results/fig2.png" --fig3="results/fig3.png"
+```
+
+**Parameters:**
+
+- `--file_path`: Path to the cleaned data file
+- `--table6` and `--table7`: Paths where the model results tables will be saved
+- `--fig2` and `--fig3`: Paths where the model visualization figures will be saved
 
 ## License
 
 - This project is licensed under the **MIT License**.
   - For license information, refer to `LICENSE.md`.
 - All non-code items are under the **Creative Commons License 4.0**
-  - [![CC](https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by.png)](hhttps://creativecommons.org/licenses/by/4.0/ttp://google.com.au/)
+  - <a href="https://creativecommons.org/licenses/by/4.0/"><img src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by.png" alt="CC" width="88" height="34"></a>
