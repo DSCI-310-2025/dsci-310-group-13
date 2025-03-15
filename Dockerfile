@@ -1,5 +1,5 @@
 # Borrowed from https://github.com/chendaniely/docker-renv/blob/main/Dockerfile
-FROM rocker/rstudio:latest
+FROM rocker/rstudio:4.4.3
 
 # Set renv library path inside the container
 ENV RENV_PATHS_ROOT=/home/rstudio/renv
