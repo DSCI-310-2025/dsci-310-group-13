@@ -60,5 +60,7 @@ rsconnect/
 data
 # results dir
 results
+Rplots.pdf
 
 .sh_history
+

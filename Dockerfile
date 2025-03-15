@@ -4,9 +4,6 @@ FROM rocker/rstudio:4.4.3
 # Set renv library path inside the container
 ENV RENV_PATHS_ROOT=/home/rstudio/renv
 
-# Ensure the renv library directory exists
-RUN mkdir -p /home/rstudio/renv
-
 # Set working directory
 WORKDIR /home/rstudio/
 
@@ -29,10 +26,16 @@ RUN apt-get update && apt-get install -y \
   libjpeg-dev \
   libbz2-dev \
   zlib1g-dev \
-  pkg-config
+  pkg-config \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/*
 
 # Install renv and restore packages
 RUN R -e "install.packages('renv', repos='https://cloud.r-project.org')"
+RUN R -e "renv::consent(provided = TRUE)"
+RUN R -e "renv::activate()"
 RUN R -e "renv::restore()"
+
+COPY . .
 
 EXPOSE 8787
