@@ -35,6 +35,8 @@ RUN R -e "install.packages('renv', repos='https://cloud.r-project.org')"
 RUN R -e "renv::consent(provided = TRUE)"
 RUN R -e "renv::activate()"
 RUN R -e "renv::restore()"
+# install tinytex for building pdfs
+RUN R -e "tinytex::install_tinytex()"
 
 COPY . .
 
