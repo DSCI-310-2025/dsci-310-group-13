@@ -1,8 +1,10 @@
-# Predicting Student Exam Performance Bsed on Study Habits 
+# Predicting Student Exam Performance Bsed on Study Habits
 
 ## Contributors
+
 This project is developed by **Group 13** as part of the DSCI 310 course:
-- **Adam Walmsley** 
+
+- **Adam Walmsley**
 - **Morgan Dean**
 - **Tracy Wang**
 - **Yuexiang Ni**
@@ -19,7 +21,7 @@ By analyzing these relationships, our study can provide recommendations for stud
 
 > Can we predict a student's exam performance (LPR or PEG) based on their study time and repetition (STG, SCG, STR)?
 
-## How to Run the Data Analysis
+## Build Data Analysis
 
 ### **Option 1: Using Docker (Recommended)**
 
@@ -34,23 +36,23 @@ To run the data analysis, follow these steps:
    ```bash
    docker run -p 8787:8787 -e PASSWORD=password tracywxr/dsci310-project
    ```
+
 - This will start an RStudio Server at http://localhost:8787
 - Login using:
   - Username: `rstudio`
   - Password: `password`
 
-3. **Run the Analysis**
-- Open `analysis.qmd` in RStudio
-- Run the analysis inside RStudio
+3. **Make the analysis**
 
-4. **(Optional) Using Docker Compose** If you prefer Docker Compose, run:
-   ```bash
-   docker-compose up
-   ```
-This will automatically start the container.
+- Run `make all` in the container terminal to pull data, make tables, and build the quarto document.
+- If you run into issues, run `make clean` to clean data directories and start from scratch.
+
+4. **View the outputted report in `reports/student_exam_performance.html` or `reports/student_exam_perforamce.pdf`**
 
 ### **Option 2: Running Locally (without Docker)**
+
 1. **Clone the repository to your local machine**:
+
    ```bash
    git clone https://github.com/DSCI-310-2025/dsci-310-group-13.git
    cd dsci-310-group-13/
@@ -59,14 +61,18 @@ This will automatically start the container.
 2. **Open R or RStudio, and navigate to the project directory.**
 
 3. **Activate the R environment by running**:
+
    ```bash
    renv::restore()
    ```
-This will install all necessary dependencies listed in `renv.lock`.
 
-4. **Run the analysis script**:
-- Open analysis.qmd in RStudio
-- Run the analysis inside RStudio
+   This will install all necessary dependencies listed in `renv.lock`.
+
+4. **Make the analysis**:
+
+```bash
+make all
+```
 
 ## Dependencies
 
@@ -87,25 +93,20 @@ library(caret)      # Classification and Regression Training
 
 ## Development
 
-### Intialize R
-
-1. Open the R repl.
+1. Start docker development environment
 
 ```bash
-# In the terminal
-R
+docker compose up -d
 ```
 
-2. Initialize renv.
+2. Access the RStudio instance in your browser at http://localhost:8787
 
-```R
-# In the R repl.
-renv::init()
-```
-
-3. Write code in `analysis.qmd`
+3. Write code in `reports/student_exam_performance.qmd`
 
 ## License
 
 - This project is licensed under the **MIT License**.
-  - For license information, refer to `LICENSE.md`.  
+  - For license information, refer to `LICENSE.md`.
+- All images are under the **Creative Commons License**
+
+[![CC](https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by.png)](hhttps://creativecommons.org/licenses/by/4.0/ttp://google.com.au/)
