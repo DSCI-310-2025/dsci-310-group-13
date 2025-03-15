@@ -8,7 +8,7 @@ ENV RENV_PATHS_ROOT=/home/rstudio/renv
 RUN mkdir -p /home/rstudio/renv
 
 # Set working directory
-WORKDIR /home/rstudio/renv
+WORKDIR /home/rstudio/
 
 # Copy only renv.lock and activate.R first to cache dependency installation
 COPY renv.lock renv.lock
