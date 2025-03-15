@@ -1,8 +1,10 @@
-# Predicting Student Exam Performance Bsed on Study Habits 
+# Predicting Student Exam Performance Bsed on Study Habits
 
 ## Contributors
+
 This project is developed by **Group 13** as part of the DSCI 310 course:
-- **Adam Walmsley** 
+
+- **Adam Walmsley**
 - **Morgan Dean**
 - **Tracy Wang**
 - **Yuexiang Ni**
@@ -19,11 +21,12 @@ By analyzing these relationships, our study can provide recommendations for stud
 
 > Can we predict a student's exam performance (LPR or PEG) based on their study time and repetition (STG, SCG, STR)?
 
-## How to Run the Data Analysis
+## Build Data Analysis
 
 ### **Option 1: Using Docker (Recommended)**
 
 1. **Pull the latest pre-built Docker image from Docker Hub:**
+
    ```bash
    docker pull tracywxr/dsci310-project:latest
    ```
@@ -31,26 +34,27 @@ By analyzing these relationships, our study can provide recommendations for stud
 To run the data analysis, follow these steps:
 
 2. **Run the container with RStudio**
+
    ```bash
    docker run -p 8787:8787 -e PASSWORD=password tracywxr/dsci310-project
    ```
-- This will start an RStudio Server at http://localhost:8787
+
+- This will start an RStudio Server at <http://localhost:8787>
 - Login using:
   - Username: `rstudio`
   - Password: `password`
 
-3. **Run the Analysis**
-- Open `analysis.qmd` in RStudio
-- Run the analysis inside RStudio
+3. **Make the analysis**
 
-4. **(Optional) Using Docker Compose** If you prefer Docker Compose, run:
-   ```bash
-   docker-compose up
-   ```
-This will automatically start the container.
+- Run `make all` in the container terminal to pull data, make tables, and build the quarto document.
+- If you run into issues, run `make clean` to clean data directories and start from scratch.
+
+4. **View the outputted report in `reports/student_exam_performance.html` or `reports/student_exam_perforamce.pdf`**
 
 ### **Option 2: Running Locally (without Docker)**
+
 1. **Clone the repository to your local machine**:
+
    ```bash
    git clone https://github.com/DSCI-310-2025/dsci-310-group-13.git
    cd dsci-310-group-13/
@@ -59,14 +63,18 @@ This will automatically start the container.
 2. **Open R or RStudio, and navigate to the project directory.**
 
 3. **Activate the R environment by running**:
+
    ```bash
    renv::restore()
    ```
-This will install all necessary dependencies listed in `renv.lock`.
 
-4. **Run the analysis script**:
-- Open analysis.qmd in RStudio
-- Run the analysis inside RStudio
+   This will install all necessary dependencies listed in `renv.lock`.
+
+4. **Make the analysis**:
+
+```bash
+make all
+```
 
 ## Dependencies
 
@@ -87,25 +95,85 @@ library(caret)      # Classification and Regression Training
 
 ## Development
 
-### Intialize R
-
-1. Open the R repl.
+1. Start docker development environment
 
 ```bash
-# In the terminal
-R
+docker compose up -d
 ```
 
-2. Initialize renv.
+2. Access the RStudio instance in your browser at <http://localhost:8787>
+
+3. Write code in `reports/student_exam_performance.qmd`
+
+## Running the Scripts
+
+This project includes several R scripts in the `scripts` directory that handle different stages of the data analysis pipeline. Below are instructions for running each script.
+
+### 1. Data Loading (`01_load.R`)
+
+This script downloads the dataset from a URL and saves it locally.
+
+**Usage:**
 
 ```R
-# In the R repl.
-renv::init()
+Rscript scripts/01_load.R --url="https://archive.ics.uci.edu/ml/machine-learning-databases/00257/Data_User_Modeling_Dataset_Hamdi%20Tolga%20KAHRAMAN.xls" --output_path="data/data.xls"
 ```
 
-3. Write code in `analysis.qmd`
+**Parameters:**
+
+- `--url`: URL to download the dataset from
+- `--output_path`: Path where the downloaded file will be saved
+
+### 2. Data Cleaning (`02_read-clean.R`)
+
+This script reads the downloaded data and performs cleaning operations.
+
+**Usage:**
+
+```R
+Rscript scripts/02_read-clean.R --file_path="data/data.xls" --output_path="data/clean/data.xls"
+```
+
+**Parameters:**
+
+- `--file_path`: Path to the input data file
+- `--output_path`: Path where the cleaned data will be saved
+
+### 3. Exploratory Data Analysis (`03_eda.R`)
+
+This script performs exploratory data analysis, generating tables and visualizations.
+
+**Usage:**
+
+```R
+Rscript scripts/03_eda.R --file_path="data/clean/data.xls" --table1="results/table1.csv" --table2="results/table2.csv" --table3="results/table3.csv" --table4="results/table4.csv" --table5="results/table5.csv" --fig1="results/fig1.png"
+```
+
+**Parameters:**
+
+- `--file_path`: Path to the cleaned data file
+- `--table1` to `--table5`: Paths where the generated tables will be saved
+- `--fig1`: Path where the generated figure will be saved
+
+### 4. Modeling (`04_modelling.R`)
+
+This script builds and evaluates a predictive model, generating result tables and visualizations.
+
+**Usage:**
+
+```R
+Rscript scripts/04_modelling.R --file_path="data/clean/data.xls" --table6="results/table6.txt" --table7="results/table7.txt" --fig2="results/fig2.png" --fig3="results/fig3.png"
+```
+
+**Parameters:**
+
+- `--file_path`: Path to the cleaned data file
+- `--table6` and `--table7`: Paths where the model results tables will be saved
+- `--fig2` and `--fig3`: Paths where the model visualization figures will be saved
 
 ## License
 
 - This project is licensed under the **MIT License**.
-  - For license information, refer to `LICENSE.md`.  
+  - For license information, refer to `LICENSE.md`.
+- All non-code items are under the **Creative Commons License 4.0**
+  - <a href="https://creativecommons.org/licenses/by/4.0/"><img src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by.png" alt="CC" width="88" height="34"></a>

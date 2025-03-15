@@ -1,6 +1,8 @@
 services:
   analysis-env:
     image: tracywxr/dsci310-project
+    build:
+      context: .
     ports:
       - "8787:8787"
     volumes:
@@ -9,4 +11,3 @@ services:
     environment:
       PASSWORD: "password"
       DISABLE_AUTH: true
-
