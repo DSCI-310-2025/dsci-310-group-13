@@ -13,19 +13,19 @@ all: data/data.xls data/clean/data.xls \
 
 # generate figures and objects for report
 
-data/data.xls: source/01_load.R
+data/data.xls: scripts/01_load.R
 	mkdir -p data
 	mkdir -p results
-	Rscript source/01_load.R --url="https://archive.ics.uci.edu/ml/machine-learning-databases/00257/Data_User_Modeling_Dataset_Hamdi%20Tolga%20KAHRAMAN.xls" \
+	Rscript scripts/01_load.R --url="https://archive.ics.uci.edu/ml/machine-learning-databases/00257/Data_User_Modeling_Dataset_Hamdi%20Tolga%20KAHRAMAN.xls" \
 		--output_path="./data/data.xls"
 
-data/clean/data.xls: source/02_read-clean.R
+data/clean/data.xls: scripts/02_read-clean.R
 	mkdir -p data/clean
-	Rscript source/02_read-clean.R --file_path="./data/data.xls" \
+	Rscript scripts/02_read-clean.R --file_path="./data/data.xls" \
 		--output_path="./data/clean/data.xls"
 
-results/table1.csv results/table2.csv results/table3.csv results/table4.csv results/table5.csv: source/03_eda.R
-	Rscript source/03_eda.R --file_path="./data/clean/data.xls" \
+results/table1.csv results/table2.csv results/table3.csv results/table4.csv results/table5.csv: scripts/03_eda.R
+	Rscript scripts/03_eda.R --file_path="./data/clean/data.xls" \
 		--table1="./results/table1.csv" \
 		--table2="./results/table2.csv" \
 		--table3="./results/table3.csv" \
@@ -33,8 +33,8 @@ results/table1.csv results/table2.csv results/table3.csv results/table4.csv resu
 		--table5="./results/table5.csv" \
 		--fig1="./results/fig1.png"
 
-results/table6.txt results/table7.txt results/fig2.png results/fig3.png: source/04_modelling.R
-	Rscript source/04_modelling.R --file_path="./data/clean/data.xls" \
+results/table6.txt results/table7.txt results/fig2.png results/fig3.png: scripts/04_modelling.R
+	Rscript scripts/04_modelling.R --file_path="./data/clean/data.xls" \
 		--table6="./results/table6.txt" \
 		--table7="./results/table7.txt" \
 		--fig2="./results/fig2.png" \
