@@ -19,9 +19,11 @@ execute:
   error: false
 ---
 
-## **Declaratioin**
+## **Declaration**
 
-Our research project used the DSCI100 project (@anthony2022) done by one of our member with consents from all his teamates. <br/>
+Our research project utilized the DSCI100 project (@anthony2022).
+
+It was originally completed by one of our members, with consent from all his teammates.
 
 ## **Summary**
 
@@ -29,7 +31,7 @@ In this study we look at how exam performance and time spent studying affect use
 
 ## **Introduction**
 
-Understanding how study time and exam performance contribute to a student's knowledge level is crucial in educational research. In this study, we analyze data from the User Knowledge Modeling Dataset retrieved from the UCI machine learning repository database with the CC BY 4.0 license (@kahraman2013). It was collected from undergraduate students in the Faculty of Technology at Gazi University. The dataset, available from the UCI Machine Learning Repository, was originally developed to assess intuitive knowledge classifiers using study behaviors and performance metrics (@kahraman2012).  
+Understanding how study time and exam performance contribute to a student's knowledge level is crucial in educational research (@timbers2022). In this study, we analyze data from the User Knowledge Modeling Dataset retrieved from the UCI machine learning repository database with the CC BY 4.0 license (@kahraman2013). It was collected from undergraduate students in the Faculty of Technology at Gazi University. The dataset, available from the UCI Machine Learning Repository, was originally developed to assess intuitive knowledge classifiers using study behaviors and performance metrics (@kahraman2012).  
 
 The dataset consists of six key variables:  
 - STG: Degree of study time for goal object materials  
@@ -42,13 +44,13 @@ The dataset consists of six key variables:
 For this study, we focus on STG (study time for goal object materials)** and PEG (exam performance for goal objects)** as primary predictors of student knowledge, represented by the UNS variable, which is classified into four categories: Very Low, Low, Middle, and High. Our objective is to determine whether time spent studying or actual exam performance is a stronger indicator of student knowledge. In other words, from this data we can use study time, and exam performance to predict our own user’s knowledge level and test which is a better determining factor to knowledge level, study time or exam performance. We decided to use these two variables to determine user knowledge because we were curious on what mattered most for students’ knowledge level, study time or how they performed on the exam. This will also in turn let us understand if exams taken place actually evaluate what they are supposed to. <br/>
 
 ### Question: 
-Which habit/result is more indicative of a students knowledge level: the time they spent studying or their actual exam results? <br/>
+Which habit/result is more indicative of a student's knowledge level: the time they spent studying or their actual exam results? <br/>
 
 ## **Methods and Results**
 
 ### Preliminary exploratory data analysis:
 
-The dataset being used is User Knowledge Modeling Data Set and includes factors that measured the study time of more and less specific information for an exam as well as study repetition of this material. Exam performance on specific and less specific information was also measured. These factors were recorded on a scale of 0.00-1.00. These observations were then used to determine the target value of the knowledge level which was categorized with very low, low, middle and high. 
+The dataset being used is User Knowledge Modeling Data Set and includes factors that measured the study time of more and less specific information for an exam as well as study repetition of this material. Exam performance on specific and less specific information was also measured. These factors were recorded on a scale from 0.00 to 1.00. These observations were then used to determine the target value of the knowledge level which was categorized with very low, low, middle and high. 
 
 To begin answering our question, we began by loading the required packages.
 
