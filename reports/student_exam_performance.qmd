@@ -19,13 +19,27 @@ execute:
   error: false
 ---
 
+## **Declaratioin**
+
+Our research project used the DSCI100 project (@anthony2022) done by one of our member with consents from all his teamates. <br/>
+
 ## **Summary**
 
 In this study we look at how exam performance and time spent studying affect user knowledge on a specific application area. We see if we can build a regression model to accurately predict this user knowledge, and which if any of the two features are more important in building an accurate model.
 
 ## **Introduction**
 
-A published paper on the development of intuitive knowledge classifiers collected data on undergraduate students in the Faculty of Technology in the Department of Computer Engineering at Gazi University in Turkey (@kahraman2012). It measured their knowledge on the subject of Electrical DC Machines using study time, study repetition and exam performance to determine their knowledge level. The data they released contains 6 total variables: the degree of study time for goal object materials, the degree of repetition number of user for goal object materials, the degree of study time of user for related object with goal object, the exam performance of user for related objects with goal object, the exam performance of user for goal objects, and finally the knowledge of the user. To simplify this data set for us to determine the knowledge level of the user, we decided to only use STG (the degree of study time for goal object materials), PEG (the exam performance of the user for goal objects), and UNS (the knowledge level of the user). In other words, from this data we can use study time, and exam performance to predict our own user’s knowledge level and test which is a better determining factor to knowledge level, study time or exam performance. We decided to use these two variables to determine user knowledge because we were curious on what mattered most for students’ knowledge level, study time or how they performed on the exam. This will also in turn let us understand if exams taken place actually evaluate what they are supposed to.<br/>
+Understanding how study time and exam performance contribute to a student's knowledge level is crucial in educational research. In this study, we analyze data from the User Knowledge Modeling Dataset retrieved from the UCI machine learning repository database with the CC BY 4.0 license (@kahraman2013). It was collected from undergraduate students in the Faculty of Technology at Gazi University. The dataset, available from the UCI Machine Learning Repository, was originally developed to assess intuitive knowledge classifiers using study behaviors and performance metrics (@kahraman2012).  
+
+The dataset consists of six key variables:  
+- STG: Degree of study time for goal object materials  
+- SCG: Degree of repetition for goal object materials  
+- STR: Degree of study time for related objects with goal object  
+- LPR: Exam performance of the user for related objects with goal object  
+- PEG: Exam performance of the user for goal objects  
+- UNS: Knowledge level of the user (categorical target variable)  
+
+For this study, we focus on STG (study time for goal object materials)** and PEG (exam performance for goal objects)** as primary predictors of student knowledge, represented by the UNS variable, which is classified into four categories: Very Low, Low, Middle, and High. Our objective is to determine whether time spent studying or actual exam performance is a stronger indicator of student knowledge. In other words, from this data we can use study time, and exam performance to predict our own user’s knowledge level and test which is a better determining factor to knowledge level, study time or exam performance. We decided to use these two variables to determine user knowledge because we were curious on what mattered most for students’ knowledge level, study time or how they performed on the exam. This will also in turn let us understand if exams taken place actually evaluate what they are supposed to. <br/>
 
 ### Question: 
 Which habit/result is more indicative of a students knowledge level: the time they spent studying or their actual exam results? <br/>
@@ -171,3 +185,6 @@ We would also like to state that to improve this studies reliability we could ma
 ## **Reference**
 
 @kahraman2012
+@kahraman2013
+@timbers2022
+@anthony2022
