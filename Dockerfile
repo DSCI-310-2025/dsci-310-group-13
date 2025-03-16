@@ -9,6 +9,7 @@ WORKDIR /home/rstudio/
 
 # Copy only renv.lock and activate.R first to cache dependency installation
 COPY renv.lock renv.lock
+COPY renv /home/rstudio/renv
 COPY renv/activate.R renv/activate.R
 
 # Install required system dependencies

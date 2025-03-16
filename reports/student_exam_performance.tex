@@ -80,17 +80,15 @@
 \makesavenoteenv{longtable}
 \usepackage{graphicx}
 \makeatletter
-\newsavebox\pandoc@box
-\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
-  \sbox\pandoc@box{#1}%
-  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
-  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
-  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
-  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
-  \else\usebox{\pandoc@box}%
-  \fi%
-}
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
 % Set default figure placement to htbp
+\makeatletter
 \def\fps@figure{htbp}
 \makeatother
 % definitions for citeproc citations
@@ -170,6 +168,9 @@
 \@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
 \makeatother
 
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
 \usepackage{bookmark}
 
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
@@ -193,6 +194,13 @@
 \maketitle
 
 
+\subsection{\texorpdfstring{\textbf{Declaration}}{Declaration}}\label{declaration}
+
+Our research project utilized the DSCI100 project (Anthony (2022)).
+
+It was originally completed by one of our members, with consent from all
+his teammates.
+
 \subsection{\texorpdfstring{\textbf{Summary}}{Summary}}\label{summary}
 
 In this study we look at how exam performance and time spent studying
@@ -203,34 +211,43 @@ accurate model.
 
 \subsection{\texorpdfstring{\textbf{Introduction}}{Introduction}}\label{introduction}
 
-A published paper on the development of intuitive knowledge classifiers
-collected data on undergraduate students in the Faculty of Technology in
-the Department of Computer Engineering at Gazi University in Turkey
-(Kahraman (2012)). It measured their knowledge on the subject of
-Electrical DC Machines using study time, study repetition and exam
-performance to determine their knowledge level. The data they released
-contains 6 total variables: the degree of study time for goal object
-materials, the degree of repetition number of user for goal object
-materials, the degree of study time of user for related object with goal
-object, the exam performance of user for related objects with goal
-object, the exam performance of user for goal objects, and finally the
-knowledge of the user. To simplify this data set for us to determine the
-knowledge level of the user, we decided to only use STG (the degree of
-study time for goal object materials), PEG (the exam performance of the
-user for goal objects), and UNS (the knowledge level of the user). In
-other words, from this data we can use study time, and exam performance
-to predict our own user's knowledge level and test which is a better
-determining factor to knowledge level, study time or exam performance.
-We decided to use these two variables to determine user knowledge
-because we were curious on what mattered most for students' knowledge
-level, study time or how they performed on the exam. This will also in
-turn let us understand if exams taken place actually evaluate what they
-are supposed to.
+Understanding how study time and exam performance contribute to a
+student's knowledge level is crucial in educational research (Timbers
+(2022)). In this study, we analyze data from the User Knowledge Modeling
+Dataset retrieved from the UCI machine learning repository database with
+the CC BY 4.0 license (Kahraman (2013)). It was collected from
+undergraduate students in the Faculty of Technology at Gazi University.
+The dataset, available from the UCI Machine Learning Repository, was
+originally developed to assess intuitive knowledge classifiers using
+study behaviors and performance metrics (Kahraman (2012)).
+
+The dataset consists of six key variables:\\
+- STG: Degree of study time for goal object materials\\
+- SCG: Degree of repetition for goal object materials\\
+- STR: Degree of study time for related objects with goal object\\
+- LPR: Exam performance of the user for related objects with goal
+object\\
+- PEG: Exam performance of the user for goal objects\\
+- UNS: Knowledge level of the user (categorical target variable)
+
+For this study, we focus on STG (study time for goal object materials)**
+and PEG (exam performance for goal objects)** as primary predictors of
+student knowledge, represented by the UNS variable, which is classified
+into four categories: Very Low, Low, Middle, and High. Our objective is
+to determine whether time spent studying or actual exam performance is a
+stronger indicator of student knowledge. In other words, from this data
+we can use study time, and exam performance to predict our own user's
+knowledge level and test which is a better determining factor to
+knowledge level, study time or exam performance. We decided to use these
+two variables to determine user knowledge because we were curious on
+what mattered most for students' knowledge level, study time or how they
+performed on the exam. This will also in turn let us understand if exams
+taken place actually evaluate what they are supposed to.
 
 \subsubsection{Question:}\label{question}
 
-Which habit/result is more indicative of a students knowledge level: the
-time they spent studying or their actual exam results?
+Which habit/result is more indicative of a student's knowledge level:
+the time they spent studying or their actual exam results?
 
 \subsection{\texorpdfstring{\textbf{Methods and
 Results}}{Methods and Results}}\label{methods-and-results}
@@ -242,8 +259,8 @@ The dataset being used is User Knowledge Modeling Data Set and includes
 factors that measured the study time of more and less specific
 information for an exam as well as study repetition of this material.
 Exam performance on specific and less specific information was also
-measured. These factors were recorded on a scale of 0.00-1.00. These
-observations were then used to determine the target value of the
+measured. These factors were recorded on a scale from 0.00 to 1.00.
+These observations were then used to determine the target value of the
 knowledge level which was categorized with very low, low, middle and
 high.
 
@@ -273,51 +290,49 @@ rows from each table to observe these changes. (See
 Table~\ref{tbl-knowledge_train_data} and
 Table~\ref{tbl-knowledge_test_data} below)
 
-\begin{table}
+\begin{longtable}[]{@{}rrl@{}}
 
 \caption{\label{tbl-knowledge_train_data}First six rows of the Training
 Data}
 
-\centering{
+\tabularnewline
 
-\begin{verbatim}
-# A tibble: 6 x 3
-    STG   PEG UNS     
-  <dbl> <dbl> <ord>   
-1  0     0    very_low
-2  0.08  0.9  High    
-3  0.06  0.33 Low     
-4  0.1   0.3  Middle  
-5  0.08  0.24 Low     
-6  0.09  0.66 Middle  
-\end{verbatim}
+\toprule\noalign{}
+STG & PEG & UNS \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+0.00 & 0.00 & very\_low \\
+0.08 & 0.90 & High \\
+0.06 & 0.33 & Low \\
+0.10 & 0.30 & Middle \\
+0.08 & 0.24 & Low \\
+0.09 & 0.66 & Middle \\
 
-}
+\end{longtable}
 
-\end{table}%
-
-\begin{table}
+\begin{longtable}[]{@{}rrl@{}}
 
 \caption{\label{tbl-knowledge_test_data}First six rows of the Testing
 Data}
 
-\centering{
+\tabularnewline
 
-\begin{verbatim}
-# A tibble: 6 x 3
-    STG   PEG UNS     
-  <dbl> <dbl> <ord>   
-1  0     0.05 very_low
-2  0.05  0.14 Low     
-3  0.08  0.85 High    
-4  0.2   0.85 High    
-5  0.22  0.9  High    
-6  0.14  0.3  Low     
-\end{verbatim}
+\toprule\noalign{}
+STG & PEG & UNS \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+0.00 & 0.05 & very\_low \\
+0.05 & 0.14 & Low \\
+0.08 & 0.85 & High \\
+0.20 & 0.85 & High \\
+0.22 & 0.90 & High \\
+0.14 & 0.30 & Low \\
 
-}
-
-\end{table}%
+\end{longtable}
 
 Next, we wanted to see the distribution of knowledge levels within the
 training and testing data, so we grouped the data by the knowledge
@@ -332,47 +347,45 @@ have a middle knowledge level. We will have to keep these differences in
 mind during the randomization process and as we conduct further
 analysis.
 
-\begin{table}
+\begin{longtable}[]{@{}lrr@{}}
 
 \caption{\label{tbl-know_percentage_train}Count and Percent of User
 Knowledge Levels in the training data.}
 
-\centering{
+\tabularnewline
 
-\begin{verbatim}
-# A tibble: 4 x 3
-  UNS      count percentage
-  <ord>    <int>      <dbl>
-1 very_low    24       9.30
-2 Low         83      32.2 
-3 Middle      88      34.1 
-4 High        63      24.4 
-\end{verbatim}
+\toprule\noalign{}
+UNS & count & percentage \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+very\_low & 24 & 9.302326 \\
+Low & 83 & 32.170543 \\
+Middle & 88 & 34.108527 \\
+High & 63 & 24.418605 \\
 
-}
+\end{longtable}
 
-\end{table}%
-
-\begin{table}
+\begin{longtable}[]{@{}lrr@{}}
 
 \caption{\label{tbl-know_percentage_test}Count and Percent of User
 Knowledge Levels in the testing data.}
 
-\centering{
+\tabularnewline
 
-\begin{verbatim}
-# A tibble: 4 x 3
-  UNS      count percentage
-  <ord>    <int>      <dbl>
-1 very_low    26       17.9
-2 Low         46       31.7
-3 Middle      34       23.4
-4 High        39       26.9
-\end{verbatim}
+\toprule\noalign{}
+UNS & count & percentage \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+very\_low & 26 & 17.93103 \\
+Low & 46 & 31.72414 \\
+Middle & 34 & 23.44828 \\
+High & 39 & 26.89655 \\
 
-}
-
-\end{table}%
+\end{longtable}
 
 We still wanted to understand our data a bit more. To do so, we wrangled
 the training data a bit more to generate a table of the mean STG and PEG
@@ -381,26 +394,49 @@ level. This helped us get a sense of the boundaries for each class and
 the variance within each predictor (See
 Table~\ref{tbl-knowledge_train_summary} below).
 
-\begin{table}
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1343}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.0896}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1493}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1493}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1194}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1194}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1194}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1194}}@{}}
 
 \caption{\label{tbl-knowledge_train_summary}Means, Minimums, and
 Maximums of Selected Variables in Training Data}
 
-\centering{
+\tabularnewline
 
-\begin{verbatim}
-# A tibble: 4 x 8
-  UNS      count mean_STG mean_PEG max_STG max_PEG min_STG min_PEG
-  <ord>    <int>    <dbl>    <dbl>   <dbl>   <dbl>   <dbl>   <dbl>
-1 very_low    24    0.306   0.0908    0.68    0.24    0       0   
-2 Low         83    0.321   0.238     0.73    0.35    0.02    0.01
-3 Middle      88    0.400   0.542     0.8     0.83    0.06    0.25
-4 High        63    0.422   0.773     0.99    0.93    0       0.47
-\end{verbatim}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+UNS
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+count
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+mean\_STG
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+mean\_PEG
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+max\_STG
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+max\_PEG
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+min\_STG
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+min\_PEG
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+very\_low & 24 & 0.3057917 & 0.0908333 & 0.68 & 0.24 & 0.00 & 0.00 \\
+Low & 83 & 0.3211446 & 0.2376265 & 0.73 & 0.35 & 0.02 & 0.01 \\
+Middle & 88 & 0.3999773 & 0.5423864 & 0.80 & 0.83 & 0.06 & 0.25 \\
+High & 63 & 0.4216508 & 0.7725397 & 0.99 & 0.93 & 0.00 & 0.47 \\
 
-}
-
-\end{table}%
+\end{longtable}
 
 All these tables helped us understand the data but still required
 attentive interpretation. So we now created a visualization of the User
@@ -414,13 +450,13 @@ on each category (See Figure~\ref{fig-knowledge_train_summary} below).
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{student_exam_performance_files/figure-pdf/fig-knowledge_train_summary-1.pdf}}
+\includegraphics[width=0.8\textwidth,height=\textheight]{../results/fig1.png}
 
 }
 
 \caption{\label{fig-knowledge_train_summary}Visualization of the
 distribution of Knowledge Levels based on Exam Performance and Study
-Time}
+Time.}
 
 \end{figure}%
 
@@ -432,44 +468,55 @@ logistic regression. Since this is a multi classification problem we
 could not use simple binary logistic regression. We begin by fitting our
 model and looking at the coefficients on each feature.
 
-\begin{verbatim}
-Call:
-polr(formula = UNS ~ STG + PEG, data = knowledge_train_data, 
-    Hess = TRUE)
+\begin{longtable}[]{@{}l@{}}
 
-Coefficients:
-      Value Std. Error t value
-STG  0.4481     0.8315  0.5389
-PEG 23.3257     2.4173  9.6495
+\caption{\label{tbl-ordinal_model}Summary across included features in
+our fitted model}
 
-Intercepts:
-             Value   Std. Error t value
-very_low|Low  2.6636  0.5232     5.0912
-Low|Middle    8.3128  0.8372     9.9291
-Middle|High  16.0228  1.6559     9.6762
+\tabularnewline
 
-Residual Deviance: 232.5871 
-AIC: 242.5871 
-\end{verbatim}
+\toprule\noalign{}
+Call: \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+polr(formula = UNS \textasciitilde{} STG + PEG, data =
+knowledge\_train\_data, \\
+Hess = TRUE) \\
+Coefficients: \\
+Value Std. Error t value \\
+STG 0.4481 0.8315 0.5389 \\
+PEG 23.3257 2.4173 9.6495 \\
+Intercepts: \\
+Value Std. Error t value \\
+very\_low\textbar Low 2.6636 0.5232 5.0912 \\
+Low\textbar Middle 8.3128 0.8372 9.9291 \\
+Middle\textbar High 16.0228 1.6559 9.6762 \\
+Residual Deviance: 232.5871 \\
+AIC: 242.5871 \\
+
+\end{longtable}
 
 From Table~\ref{tbl-ordinal_model} we see that exam performance has a
 coefficient nearly fifty times the degree of study indicating the
 feature is much more indicative of user knowledge. Now we have to see if
 this model performs well on the test data
 
-\begin{table}
+\begin{longtable}[]{@{}l@{}}
 
 \caption{\label{tbl-accuracy}Model Accuracy}
 
-\centering{
+\tabularnewline
 
-\begin{verbatim}
-[1] 0.8206897
-\end{verbatim}
+\toprule\noalign{}
+{[}1{]} 0.8206897 \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
 
-}
-
-\end{table}%
+\end{longtable}
 
 Our model produces a mean accuracy of 82\% which is promising (see
 Table~\ref{tbl-accuracy}). This means that really only using exam grade
@@ -482,7 +529,7 @@ Next we produce some visualizations to get a better sense of the data.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{student_exam_performance_files/figure-pdf/fig-confusion_matrix-1.pdf}}
+\includegraphics[width=0.8\textwidth,height=\textheight]{../results/fig2.png}
 
 }
 
@@ -500,7 +547,7 @@ introduced when comparing the `low' and `very low' classes.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{student_exam_performance_files/figure-pdf/fig-feature_inportance-1.pdf}}
+\includegraphics[width=0.8\textwidth,height=\textheight]{../results/fig3.png}
 
 }
 
@@ -544,14 +591,28 @@ regression techniques.
 
 \subsection{\texorpdfstring{\textbf{Reference}}{Reference}}\label{reference}
 
-Kahraman (2012)
+Kahraman (2012) Kahraman (2013) Timbers (2022) Anthony (2022)
 
 \phantomsection\label{refs}
 \begin{CSLReferences}{1}{0}
+\bibitem[\citeproctext]{ref-anthony2022}
+Anthony, Prohaska, E. 2022. {``DSCI100 Classification Project.''}
+Vancouver, Canada: The University of British Columbia.
+
 \bibitem[\citeproctext]{ref-kahraman2012}
 Kahraman, Sagiroglu, H. T. 2012. {``The Development of Intuitive
 Knowledge Classifier and the Modeling of Domain Dependent Data.''}
 \url{https://www.sciencedirect.com/science/article/abs/pii/S0950705112002225?via\%3Dihub}.
+
+\bibitem[\citeproctext]{ref-kahraman2013}
+---------. 2013. {``User Knowledge Modeling Data Set.''} Ankara, Turkey:
+UCI Machine Learning Repository.
+\url{https://archive.ics.uci.edu/ml/datasets/User+Knowledge+Modeling\#}.
+
+\bibitem[\citeproctext]{ref-timbers2022}
+Timbers, Campbell, T. 2022. {``DSCI100 Textbook.''} Vancouver, Canada:
+The University of British Columbia.
+\url{https://datasciencebook.ca/classification2.html}.
 
 \end{CSLReferences}
 
