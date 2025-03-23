@@ -9,6 +9,7 @@ library(MASS)
 library(ggplot2)
 library(caret)
 library(docopt)
+library(testthat)
 
 "This script reads and cleans the data
 
@@ -29,24 +30,14 @@ table4_path = opt$table4
 table5_path = opt$table5
 figure1_path = opt$fig1
 
-
 knowledge_train_data <- read_excel(file_path, 2)
 knowledge_test_data <- read_excel(file_path, 3)
-knowledge_test_data[knowledge_test_data == "Very Low"] <- "very_low"
 
-knowledge_train_data <- knowledge_train_data %>%
-    mutate(UNS = factor(UNS, 
-                        levels = c("very_low", "Low", "Middle", "High"), 
-                        ordered = TRUE)) %>%
-    dplyr::select(STG, PEG, UNS) %>%
-    drop_na()
+source('R/functions.R')
 
-knowledge_test_data <- knowledge_test_data %>%
-    mutate(UNS = factor(UNS, 
-                        levels = c("very_low", "Low", "Middle", "High"), 
-                        ordered = TRUE)) %>%
-    dplyr::select(STG, PEG, UNS) %>%
-    drop_na()
+knowledge_train_data <- create_train_data(knowledge_train_data)
+knowledge_test_data <- create_test_data(knowledge_test_data)
+
 
 # Table 1
 head(knowledge_train_data)
@@ -102,3 +93,4 @@ knowledge_train_plot <- knowledge_train_data %>%
         theme(text = element_text(size = 20))
 knowledge_train_plot
 ggsave(filename = figure1_path, plot = knowledge_train_plot, width = 6, height = 4, dpi = 300)
+
