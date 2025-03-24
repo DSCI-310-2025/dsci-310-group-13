@@ -10,6 +10,7 @@ library(ggplot2)
 library(caret)
 library(docopt)
 
+
 "This script models the results and presents the findings
 
 Usage: 04_modelling.R --file_path=<file_path> --table6=<table6_path> --table7=<table7_path> --fig2=<figure2_path> --fig3=<figure3_path>
@@ -34,21 +35,11 @@ figure3_path <- opt$fig3
 # Reload the knowledge train and test data
 knowledge_train_data <- read_excel(file_path, 2)
 knowledge_test_data <- read_excel(file_path, 3)
-knowledge_test_data[knowledge_test_data == "Very Low"] <- "very_low"
 
-knowledge_train_data <- knowledge_train_data %>%
-    mutate(UNS = factor(UNS, 
-                        levels = c("very_low", "Low", "Middle", "High"), 
-                        ordered = TRUE)) %>%
-    dplyr::select(STG, PEG, UNS) %>%
-    drop_na()
+source('R/functions.R')
 
-knowledge_test_data <- knowledge_test_data %>%
-    mutate(UNS = factor(UNS, 
-                        levels = c("very_low", "Low", "Middle", "High"), 
-                        ordered = TRUE)) %>%
-    dplyr::select(STG, PEG, UNS) %>%
-    drop_na()
+knowledge_train_data <- create_train_data(knowledge_train_data)
+knowledge_test_data <- create_test_data(knowledge_test_data)
 
 # Fitting the model
 ordinal_model <- polr(UNS ~ STG + PEG, data = knowledge_train_data, Hess = TRUE)
