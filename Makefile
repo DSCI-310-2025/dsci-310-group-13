@@ -2,14 +2,11 @@
 # date: 2025-03-13
 # template copied from IA4
 
-# this section need to be changed
 all: data/data.xls data/clean/data.xls \
 	results/table1.csv results/table2.csv results/table3.csv results/table4.csv results/table5.csv \
 	results/table6.txt results/table7.txt results/fig2.png results/fig3.png \
 	reports/out/student_exam_performance.html \
 	reports/out/student_exam_performance.pdf
-
-
 
 # generate figures and objects for report
 
@@ -41,8 +38,6 @@ results/table6.txt results/table7.txt results/fig2.png results/fig3.png: scripts
 		--fig3="./results/fig3.png"
 
 # render quarto report in HTML and PDF
-#this section is probably done
-
 reports/out/student_exam_performance.html: results reports/student_exam_performance.qmd
 	quarto render reports/student_exam_performance.qmd --to html
 
@@ -51,11 +46,9 @@ reports/out/student_exam_performance.pdf: results reports/student_exam_performan
 
 
 # clean
-#this section is probably done
 clean:
 	rm -rf results/
 	rm -rf reports/student_exam_performance.html \
 		reports/student_exam_performance.pdf \
 		reports/qmd_example_files
 	rm -rf data/
-#this last line was copied from IA4 not sure if it is good here
