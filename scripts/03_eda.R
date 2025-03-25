@@ -11,7 +11,7 @@ library(caret)
 library(docopt)
 library(testthat)
 
-source("../R/functions.R")
+source("R/functions.R")
 
 "This script reads and cleans the data
 
@@ -35,7 +35,6 @@ figure1_path <- opt$fig1
 knowledge_train_data <- read_excel(file_path, 2)
 knowledge_test_data <- read_excel(file_path, 3)
 
-source("R/functions.R")
 
 knowledge_train_data <- create_train_data(knowledge_train_data)
 knowledge_test_data <- create_test_data(knowledge_test_data)
