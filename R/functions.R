@@ -1,5 +1,7 @@
 library(readr)
 library(dplyr)
+library(rlang)
+library(tidyr)
 
 #' Prepare training data for knowledge level analysis
 #'
@@ -17,7 +19,7 @@ library(dplyr)
 #' \dontrun{
 #' # Load raw data from Excel
 #' raw_data <- read_excel("data/data.xls", 2)
-#' 
+#'
 #' # Prepare the training data
 #' clean_data <- create_train_data(raw_data)
 #' }
@@ -52,7 +54,7 @@ create_train_data <- function(knowledge_train_data) {
 #' \dontrun{
 #' # Load raw data from Excel
 #' raw_data <- read_excel("data/data.xls", 3)
-#' 
+#'
 #' # Prepare the test data
 #' clean_data <- create_test_data(raw_data)
 #' }
@@ -71,11 +73,34 @@ create_test_data <- function(knowledge_test_data) {
     return(knowledge_test_data)
 }
 
+#' Rename a column in a data frame
+#'
+#' This function renames a column in a data frame using dplyr's rename function
+#' with non-standard evaluation through rlang's sym function.
+#'
+#' @param df A data frame containing the column to be renamed
+#' @param current_column_name A string specifying the current name of the column
+#' @param new_column_name A string specifying the new name for the column
+#'
+#' @return A data frame with the specified column renamed
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' # Create a sample data frame
+#' df <- data.frame(
+#'   old_name = c(1, 2, 3),
+#'   other_col = c("A", "B", "C")
+#' )
+#'
+#' # Rename the 'old_name' column to 'new_name'
+#' df_renamed <- rename_column(df, "old_name", "new_name")
+#' }
 rename_column <- function(df, current_column_name, new_column_name) {
-  # Use dplyr::rename with !!sym for non-standard evaluation
-  df <- df %>%
-    dplyr::rename(!!new_column_name := !!rlang::sym(current_column_name))
-  return(df)
+    # Use dplyr::rename with !!sym for non-standard evaluation
+    df <- df %>%
+        dplyr::rename(!!new_column_name := !!rlang::sym(current_column_name))
+    return(df)
 }
 
 
@@ -131,6 +156,4 @@ create_percentage_table <- function(data, path) {
         )
     write_csv(result, path)
     return(invisible(result))
-  
-  
-
+}
