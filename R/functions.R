@@ -71,6 +71,13 @@ create_test_data <- function(knowledge_test_data) {
     return(knowledge_test_data)
 }
 
+rename_column <- function(df, current_column_name, new_column_name) {
+  # Use dplyr::rename with !!sym for non-standard evaluation
+  df <- df %>%
+    dplyr::rename(!!new_column_name := !!rlang::sym(current_column_name))
+  return(df)
+}
+
 
 # Table functions
 
@@ -124,4 +131,6 @@ create_percentage_table <- function(data, path) {
         )
     write_csv(result, path)
     return(invisible(result))
-}
+  
+  
+
