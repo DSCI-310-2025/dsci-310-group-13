@@ -47,17 +47,21 @@ To run the data analysis, follow these steps:
 3. **Run the analysis**
 
 - In the container terminal, run:
+
    ```bash
    make all
    ```
+
   - For more details and explanations, see the **Makefile** section below.
 - If you run into issues, reset the data and start over by running:
+
    ```bash
    make clean
-   ``` 
+   ```
 
-4. **View the outputted report** 
-- HTML Report: `reports/student_exam_performance.html` 
+4. **View the outputted report**
+
+- HTML Report: `reports/student_exam_performance.html`
 - PDF  Report: `reports/student_exam_performace.pdf`
 
 ### **Option 2: Running Locally (without Docker)**
@@ -74,9 +78,11 @@ To run the data analysis, follow these steps:
 3. **Set up the R environment**:
 
 - Install dependencies using R `renv`
+
    ```r
    renv::restore()
    ```
+
 - This will install all necessary dependencies listed in `renv.lock`.
 
 4. **Run the analysis**:
@@ -85,7 +91,7 @@ To run the data analysis, follow these steps:
 make all
 ```
 
-## Data Analysis Pipeline 
+## Data Analysis Pipeline
 
 This project includes several **R scripts** in the `scripts/` directory that handle different stages of the data analysis pipeline. Below are instructions for running each script.
 
@@ -158,10 +164,13 @@ This project uses a **Makefile** to automate the data pipline.
 ### Run the full analysis
 
 To execute the full workflow, run:
+
 ```bash
 make all
 ```
+
 This will:
+
 1. Download the dataset.
 2. Clean and preprocess the data.
 3. Perform exploratory data analysis.
@@ -171,11 +180,13 @@ This will:
 ### Clean the project directory
 
 To remove all generated files, run:
+
 ```bash
 make clean
 ```
 
 This will delete:
+
 - Downloaded data (`data/`)
 - Generated tables & figures (`results/`)
 - Reports (`reports/out/`)
@@ -213,6 +224,14 @@ Then access RStudio at <http://localhost:8787> and work on the project.
 
 - Create a new branch before making changes:
 - After completing work, push and create a Pull Request(PR).
+
+### Running Tests
+
+To run the tests to make sure that existing functions work as intended, run the following command from the working directory.
+
+```bash
+ Rscript -e "library(testthat); test_dir('test')"
+```
 
 ## License
 
