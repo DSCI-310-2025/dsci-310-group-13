@@ -1,6 +1,12 @@
 # To run tests: `Rscript -e "library(testthat); test_dir('test')"`
+# To run tests: `Rscript test/tests.R`
 
-source("../R/functions.R")
+
+# Load testing framework
+library(testthat)
+
+# source("../R/functions.R")
+source("R/functions.R")
 
 # Create a dummy data frame to simulate Excel data
 dummy_data <- data.frame(

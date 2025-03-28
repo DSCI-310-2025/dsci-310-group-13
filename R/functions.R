@@ -157,3 +157,4 @@ create_percentage_table <- function(data, path) {
     write_csv(result, path)
     return(invisible(result))
 }
+
