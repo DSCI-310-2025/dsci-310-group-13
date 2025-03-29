@@ -52,31 +52,9 @@ create_percentage_table(knowledge_train_data, table3_path)
 # Table 4
 create_percentage_table(knowledge_test_data, table4_path)
 
-# Table 5
-knowledge_train_summary <- knowledge_train_data %>%
-  group_by(UNS) %>%
-  summarize(
-    count = n(),
-    mean_STG = mean(STG),
-    mean_PEG = mean(PEG),
-    max_STG = max(STG),
-    max_PEG = max(PEG),
-    min_STG = min(STG),
-    min_PEG = min(PEG)
-  )
-knowledge_train_summary
-write_csv(knowledge_train_summary, table5_path)
+# Table 5 - use create_uns_summary_table function
+create_uns_summary_table(knowledge_train_data, table5_path)
 
-# Figure 1
-options(repr.plot.width = 10, repr.plot.height = 6)
-knowledge_train_plot <- knowledge_train_data %>%
-  ggplot(aes(x = STG, y = PEG, colour = UNS)) +
-  labs(
-    x = "Degree of study time",
-    y = "Exam performance",
-    colour = "Knowledge Level of Users"
-  ) +
-  geom_point() +
-  theme(text = element_text(size = 20))
-knowledge_train_plot
-ggsave(filename = figure1_path, plot = knowledge_train_plot, width = 6, height = 4, dpi = 300)
+# Figure 1 - use plot_stg_vs_peg_scatter function
+plot_stg_vs_peg_scatter(knowledge_train_data, figure1_path)
+
