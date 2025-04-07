@@ -41,7 +41,7 @@ The dataset consists of six key variables:
 - PEG: Exam performance of the user for goal objects  
 - UNS: Knowledge level of the user (categorical target variable)  
 
-For this study, we focus on STG (study time for goal object materials)** and PEG (exam performance for goal objects)** as primary predictors of student knowledge, represented by the UNS variable, which is classified into four categories: Very Low, Low, Middle, and High. Our objective is to determine whether time spent studying or actual exam performance is a stronger indicator of student knowledge. In other words, from this data we can use study time, and exam performance to predict our own user’s knowledge level and test which is a better determining factor to knowledge level, study time or exam performance. We decided to use these two variables to determine user knowledge because we were curious on what mattered most for students’ knowledge level, study time or how they performed on the exam. This will also in turn let us understand if exams taken place actually evaluate what they are supposed to. <br/>
+For this study, we focus on STG (study time for goal object materials)** and PEG (exam performance for goal objects)** as primary predictors of student knowledge, represented by the UNS variable, which is classified into four categories: Very Low, Low, Middle, and High. Our objective is to determine whether time spent studying or actual exam performance is a stronger indicator of student knowledge. In other words, from this data we can use study time, and exam performance to predict our own user’s knowledge level and test which is a better determining factor to knowledge level, study time or exam performance. We decided to use these two variables to determine user knowledge because we were curious on what mattered most for students’ knowledge level, study time or how they performed on the exam. This will also in turn let us understand if exams taken place actually evaluate what they are supposed to. If proven we will be able to  implement our model onto similar evaluations at any university to determine if exams are in fact relevant to real-world learnings.<br/>
 
 ### Question: 
 Which habit/result is more indicative of a student's knowledge level: the time they spent studying or their actual exam results? <br/>
@@ -183,6 +183,10 @@ The impacts this study could bring about are vast. By performing a similar resul
 In the future this could lead to questions regarding what else is indicative of user knowledge other than exam performance. Are there other indicators more important than exam performance?
 
 We would also like to state that to improve this studies reliability we could make some or all of the following improvements. We could use cross validation to increase the confidence of our results, include more features to build a more robust and accurate model, and test out other regression techniques.
+
+## **Assumptions and Limitations**
+
+In this study we determined a model that can classify students into one of four categories for student performance based on a few metrics. We acknowledge that our model was only applied to a single dataset from one university and extracting these results and methods to new datasets will yield different results that are out of our scope. We also assumed that all data was taken in a random, unbiased manor from Gazi University.
 
 ## **Reference**
 
