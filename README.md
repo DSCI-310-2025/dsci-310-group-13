@@ -206,6 +206,7 @@ library(rmarkdown)  # Markdown report generation
 library(MASS)       # Statistical functions and modeling
 library(ggplot2)    # Data visualization
 library(caret)      # Classification and Regression Training
+library(docopt)
 ```
 
 ## Development and Collaboration
