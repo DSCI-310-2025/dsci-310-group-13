@@ -11,7 +11,7 @@ This project is developed by **Group 13** as part of the DSCI 310 course:
 
 ## Introduction
 
-The ability to predict student exam performance based on study habits is crucial for understanding effective learning strategies. This project examines how factors like **study time (STG)**, **study repetition (SCG)**, and **study engagement** with **related objects (STR)** influence a **student's exam performance (LPR and PEG)**.
+The ability to predict student exam performance based on study habits is crucial for understanding effective learning strategies. This project examines how factors like **study time (STG)**, **study repetition (SCG)**, and **study engagement** with **related objects (STR)** influence a **student's exam performance (LPR and PEG)**. The original data set can be found online [here]("https://archive.ics.uci.edu/ml/machine-learning-databases/00257/Data_User_Modeling_Dataset_Hamdi%20Tolga%20KAHRAMAN.xls").
 
 Using the **User Knowledge Modeling Dataset**, which contains exam performance data for students based on their study behaviors, we aim to develop a regression model to predict exam scores. This approach helps identify the most significant study habits contributing to higher performance.
 
