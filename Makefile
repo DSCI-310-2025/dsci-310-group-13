@@ -5,8 +5,8 @@
 all: data/data.xls data/clean/data.xls \
 	results/table1.csv results/table2.csv results/table3.csv results/table4.csv results/table5.csv \
 	results/table6.txt results/table7.txt results/fig2.png results/fig3.png \
-	reports/out/student_exam_performance.html \
-	reports/out/student_exam_performance.pdf
+	reports/student_exam_performance.html \
+	reports/student_exam_performance.pdf
 
 # generate figures and objects for report
 
