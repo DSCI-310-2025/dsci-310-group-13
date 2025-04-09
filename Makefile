@@ -38,11 +38,10 @@ results/table6.txt results/table7.txt results/fig2.png results/fig3.png: scripts
 		--fig3="./results/fig3.png"
 
 # render quarto report in HTML and PDF
-reports/out/student_exam_performance.html: results reports/student_exam_performance.qmd
-	mkdir -p reports/out
+reports/student_exam_performance.html: results reports/student_exam_performance.qmd
 	quarto render reports/student_exam_performance.qmd --to html
 
-reports/out/student_exam_performance.pdf: results reports/student_exam_performance.qmd
+reports/student_exam_performance.pdf: results reports/student_exam_performance.qmd
 	quarto render reports/student_exam_performance.qmd --to pdf
 
 
@@ -53,4 +52,3 @@ clean:
 		reports/student_exam_performance.pdf \
 		reports/qmd_example_files
 	rm -rf data/
-	rm -rf reports/out
