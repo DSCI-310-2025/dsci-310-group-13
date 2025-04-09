@@ -36,7 +36,11 @@ To run the data analysis, follow these steps:
 2. **Run the container with RStudio**
 
    ```bash
-   docker run -p 8787:8787 -e PASSWORD=password tracywxr/dsci310-project
+   docker run -p 8787:8787 -e PASSWORD=password \
+   -v $(pwd):/home/rstudio/project \
+   -w /home/rstudio/project \
+   --user root \
+   tracywxr/dsci310-project
    ```
 
 - This will start an RStudio Server at <http://localhost:8787>
