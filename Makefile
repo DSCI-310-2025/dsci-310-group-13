@@ -30,6 +30,7 @@ results/table1.csv results/table2.csv results/table3.csv results/table4.csv resu
 		--table5="./results/table5.csv" \
 		--fig1="./results/fig1.png"
 
+
 results/table6.txt results/table7.txt results/fig2.png results/fig3.png: scripts/04_modelling.R
 	Rscript scripts/04_modelling.R --file_path="./data/clean/data.xls" \
 		--table6="./results/table6.txt" \

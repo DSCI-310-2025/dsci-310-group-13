@@ -648,6 +648,25 @@
       ],
       "Hash": "e9651417729bbe7472e32b5027370e79"
     },
+    "examperformancetools": {
+      "Package": "examperformancetools",
+      "Version": "0.0.0.9000",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "examperformancetools",
+      "RemoteUsername": "DSCI-310-2025",
+      "RemoteSha": "2e82e4f6ff328741f452dfbba0eb71f3de982ee7",
+      "Requirements": [
+        "dplyr",
+        "ggplot2",
+        "magrittr",
+        "readr",
+        "rlang",
+        "tidyr"
+      ],
+      "Hash": "678d624d8b475ef298c8ff82020d94f2"
+    },
     "fansi": {
       "Package": "fansi",
       "Version": "1.0.6",
