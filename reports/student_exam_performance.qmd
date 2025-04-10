@@ -73,7 +73,7 @@ Since the data set was an excel file and came from the web, we used the ```downl
 ```{r}
 url <- "https://archive.ics.uci.edu/ml/machine-learning-databases/00257/Data_User_Modeling_Dataset_Hamdi%20Tolga%20KAHRAMAN.xls"
 data_file <- "../data/data.xls"
-download.file(url, data_file, mode = 'wb')
+#download.file(url, data_file, mode = 'wb')
 knowledge_train_data <- read_excel(data_file, 2)
 knowledge_test_data <- read_excel(data_file, 3)
 knowledge_test_data[knowledge_test_data == "Very Low"] <- "very_low"
