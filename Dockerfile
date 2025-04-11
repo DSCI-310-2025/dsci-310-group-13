@@ -1,5 +1,5 @@
 # Borrowed from https://github.com/chendaniely/docker-renv/blob/main/Dockerfile
-FROM rocker/rstudio:4.4.3 AS base
+FROM rocker/verse:4.4.3 AS base
 
 # Install required system dependencies
 RUN apt-get update && apt-get install -y \
@@ -36,29 +36,17 @@ RUN R -e "renv::consent(provided = TRUE)"
 RUN R -e "renv::activate()"
 RUN R -e "renv::restore()"
 
+RUN chmod -R 777 renv/
+RUN chmod -R 777 renv.lock
 
-FROM rocker/rstudio:4.4.3
+FROM rocker/verse:4.4.3
 
 WORKDIR /home/rstudio/
 
 USER rstudio
-RUN Rscript -e 'install.packages("tinytex", repos="https://cloud.r-project.org")'
-RUN Rscript -e 'tinytex::install_tinytex()'
-
-ENV PATH="${PATH}:/home/rstudio/bin"
-
-RUN tlmgr update --self
-RUN tlmgr update --all
-RUN tlmgr install \
-  koma-script \
-  caption \
-  pgf \
-  environ \
-  tikzfill \
-  tcolorbox \
-  pdfcol
-
+RUN quarto install tinytex
 USER root
+
 
 COPY --from=base /home/rstudio .
 COPY . .
