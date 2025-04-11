@@ -30,6 +30,7 @@ results/table1.csv results/table2.csv results/table3.csv results/table4.csv resu
 		--table5="./results/table5.csv" \
 		--fig1="./results/fig1.png"
 
+
 results/table6.txt results/table7.txt results/fig2.png results/fig3.png: scripts/04_modelling.R
 	Rscript scripts/04_modelling.R --file_path="./data/clean/data.xls" \
 		--table6="./results/table6.txt" \
@@ -37,12 +38,13 @@ results/table6.txt results/table7.txt results/fig2.png results/fig3.png: scripts
 		--fig2="./results/fig2.png" \
 		--fig3="./results/fig3.png"
 
+
 # render quarto report in HTML and PDF
 reports/student_exam_performance.html: results reports/student_exam_performance.qmd
-	quarto render reports/student_exam_performance.qmd --to html --execute-dir project
+	quarto render reports/student_exam_performance.qmd --to html 
 
 reports/student_exam_performance.pdf: results reports/student_exam_performance.qmd
-	quarto render reports/student_exam_performance.qmd --to pdf --execute-dir project
+	quarto render reports/student_exam_performance.qmd --to pdf 
 
 
 # clean
