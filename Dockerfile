@@ -1,16 +1,5 @@
 # Borrowed from https://github.com/chendaniely/docker-renv/blob/main/Dockerfile
-FROM rocker/rstudio:4.4.3
-
-# Set renv library path inside the container
-ENV RENV_PATHS_ROOT=/home/rstudio/renv
-
-# Set working directory
-WORKDIR /home/rstudio/
-
-# Copy only renv.lock and activate.R first to cache dependency installation
-COPY renv.lock renv.lock
-COPY renv /home/rstudio/renv
-COPY renv/activate.R renv/activate.R
+FROM rocker/rstudio:4.4.3 AS base
 
 # Install required system dependencies
 RUN apt-get update && apt-get install -y \
@@ -31,14 +20,28 @@ RUN apt-get update && apt-get install -y \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
-# Install renv and restore packages
+# Set working directory
+WORKDIR /home/rstudio/
+
+# Copy only renv.lock and activate.R first to cache dependency installation
+COPY renv.lock renv.lock
+COPY renv/activate.R renv/activate.R
+
+# Set default cache location
+RUN mkdir renv/.cache
+ENV RENV_PATHS_CACHE=renv/.cache
+
 RUN R -e "install.packages('renv', repos='https://cloud.r-project.org')"
 RUN R -e "renv::consent(provided = TRUE)"
 RUN R -e "renv::activate()"
 RUN R -e "renv::restore()"
-# install tinytex for building pdfs
-RUN R -e "tinytex::install_tinytex()"
 
+
+FROM rocker/rstudio:4.4.3
+
+WORKDIR /home/rstudio/
+
+COPY --from=base /home/rstudio .
 COPY . .
 
 EXPOSE 8787
