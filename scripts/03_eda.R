@@ -10,7 +10,6 @@ library(ggplot2)
 library(caret)
 library(docopt)
 library(testthat)
-
 library(examperformancetools)
 
 "This script reads and cleans the data
