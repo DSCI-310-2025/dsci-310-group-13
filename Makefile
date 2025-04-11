@@ -39,10 +39,10 @@ results/table6.txt results/table7.txt results/fig2.png results/fig3.png: scripts
 
 # render quarto report in HTML and PDF
 reports/student_exam_performance.html: results reports/student_exam_performance.qmd
-	quarto render reports/student_exam_performance.qmd --to html --execute-dir project
+	quarto render reports/student_exam_performance.qmd --to html 
 
 reports/student_exam_performance.pdf: results reports/student_exam_performance.qmd
-	quarto render reports/student_exam_performance.qmd --to pdf --execute-dir project
+	quarto render reports/student_exam_performance.qmd --to pdf 
 
 
 # clean
