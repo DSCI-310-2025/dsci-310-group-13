@@ -9,7 +9,7 @@ library(MASS)
 library(ggplot2)
 library(caret)
 library(docopt)
-
+library(examperformancetools)
 
 "This script models the results and presents the findings
 
