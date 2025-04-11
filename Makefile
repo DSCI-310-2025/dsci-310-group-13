@@ -13,7 +13,7 @@ all: data/data.xls data/clean/data.xls \
 data/data.xls: scripts/01_load.R
 	mkdir -p data
 	mkdir -p results
-	Rscript scripts/01_load.R --url="https://archive.ics.uci.edu/ml/machine-learning-databases/00257/Data_User_Modeling_Dataset_Hamdi%20Tolga%20KAHRAMAN.xls" \
+	Rscript scripts/01_load.R --url="https://github.com/DSCI-310-2025/dsci-310-group-13/raw/38948b665da4435227738ee1439a6d130b3ac718/data/data.xls" \
 		--output_path="./data/data.xls"
 
 data/clean/data.xls: scripts/02_read-clean.R

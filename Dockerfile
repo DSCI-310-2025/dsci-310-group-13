@@ -28,8 +28,8 @@ COPY renv.lock renv.lock
 COPY renv/activate.R renv/activate.R
 
 # Set default cache location
-RUN mkdir renv/.cache
-ENV RENV_PATHS_CACHE=renv/.cache
+RUN mkdir -p renv/cache
+ENV RENV_PATHS_CACHE=renv/cache
 
 RUN R -e "install.packages('renv', repos='https://cloud.r-project.org')"
 RUN R -e "renv::consent(provided = TRUE)"
@@ -40,6 +40,25 @@ RUN R -e "renv::restore()"
 FROM rocker/rstudio:4.4.3
 
 WORKDIR /home/rstudio/
+
+USER rstudio
+RUN Rscript -e 'install.packages("tinytex", repos="https://cloud.r-project.org")'
+RUN Rscript -e 'tinytex::install_tinytex()'
+
+ENV PATH="${PATH}:/home/rstudio/bin"
+
+RUN tlmgr update --self
+RUN tlmgr update --all
+RUN tlmgr install \
+  koma-script \
+  caption \
+  pgf \
+  environ \
+  tikzfill \
+  tcolorbox \
+  pdfcol
+
+USER root
 
 COPY --from=base /home/rstudio .
 COPY . .

@@ -56,6 +56,8 @@ rsconnect/
 
 .ipynb_checkpoints
 
+#clean data
+data/clean
 # results dir
 results
 Rplots.pdf
