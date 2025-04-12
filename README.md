@@ -25,29 +25,20 @@ By analyzing these relationships, our study can provide recommendations for stud
 
 ### **Option 1: Using Docker (Recommended)**
 
-1. **Pull the latest pre-built Docker image from Docker Hub:**
+1. **Compose Docker image:**
 
    ```bash
-   docker pull tracywxr/dsci310-project:latest
+   docker compose up
    ```
+
+We ran into many permission errors using docker pull that lead to errors in reproducing the reports. Docker compose works well and takes no longer to run so we suggest using this to reproduce our analysis.
 
 To run the data analysis, follow these steps:
 
-2. **Run the container with RStudio**
+2. **Login to Local Host**
 
-   ```bash
-   docker run -p 8787:8787 -e PASSWORD=password \
-   -v $(pwd):/home/rstudio/project \
-   -w /home/rstudio/project \
-   --user root \
-   tracywxr/dsci310-project
-   ```
-
-- This will start an RStudio Server at <http://localhost:8787>
-- Login using:
-  - Username: `rstudio`
-  - Password: `password`
-- NOTE: on ARM devices, add `---platform=linux/amd64` to the docker run command.
+- Docker Compose Up started an RStudio Server at <http://localhost:8787>
+- Go to that address to see the environment in a container
 
 3. **Run the analysis**
 
