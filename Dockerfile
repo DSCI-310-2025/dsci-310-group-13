@@ -51,4 +51,6 @@ USER root
 COPY --from=base /home/rstudio .
 COPY . .
 
+RUN chmod -R 777 data
+
 EXPOSE 8787
