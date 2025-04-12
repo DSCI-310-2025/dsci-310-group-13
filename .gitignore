@@ -56,11 +56,13 @@ rsconnect/
 
 .ipynb_checkpoints
 
-# data dir
-data
+#clean data
+data/clean
 # results dir
 results
 Rplots.pdf
 
 .sh_history
 
+
+.TinyTex

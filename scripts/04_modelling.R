@@ -10,7 +10,6 @@ library(ggplot2)
 library(caret)
 library(docopt)
 library(examperformancetools)
-#source('R/functions.R')
 
 "This script models the results and presents the findings
 

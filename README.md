@@ -47,6 +47,7 @@ To run the data analysis, follow these steps:
 - Login using:
   - Username: `rstudio`
   - Password: `password`
+- NOTE: on ARM devices, add `---platform=linux/amd64` to the docker run command.
 
 3. **Run the analysis**
 

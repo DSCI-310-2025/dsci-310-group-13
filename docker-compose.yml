@@ -3,6 +3,7 @@ services:
     image: tracywxr/dsci310-project
     build:
       context: .
+    platform: linux/amd64
     ports:
       - "8787:8787"
     volumes:

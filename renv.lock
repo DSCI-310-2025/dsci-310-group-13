@@ -1,6 +1,6 @@
 {
   "R": {
-    "Version": "4.3.2",
+    "Version": "4.4.3",
     "Repositories": [
       {
         "Name": "CRAN",
@@ -666,6 +666,26 @@
         "tidyr"
       ],
       "Hash": "678d624d8b475ef298c8ff82020d94f2"
+    },
+    "examperformancetools": {
+      "Package": "examperformancetools",
+      "Version": "0.0.0.9000",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "DSCI-310-2025",
+      "RemoteRepo": "examperformancetools",
+      "RemoteRef": "main",
+      "RemoteSha": "f18141f1faf8fdcdbb3259817146f209d7836161",
+      "Requirements": [
+        "dplyr",
+        "ggplot2",
+        "magrittr",
+        "readr",
+        "rlang",
+        "tidyr"
+      ],
+      "Hash": "a1d17ebcb1127fbdf7bfdd4040143eef"
     },
     "fansi": {
       "Package": "fansi",
