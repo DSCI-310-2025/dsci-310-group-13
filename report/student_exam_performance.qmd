@@ -188,9 +188,4 @@ We would also like to state that to improve this studies reliability we could ma
 
 In this study we determined a model that can classify students into one of four categories for student performance based on a few metrics. We acknowledge that our model was only applied to a single dataset from one university and extracting these results and methods to new datasets will yield different results that are out of our scope. We also assumed that all data was taken in a random, unbiased manor from Gazi University.
 
-## **Reference**
-
-@kahraman2012
-@kahraman2013
-@timbers2022
-@anthony2022
+## Reference

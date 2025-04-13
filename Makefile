@@ -5,8 +5,8 @@
 all: data/data.xls data/clean/data.xls \
 	results/table1.csv results/table2.csv results/table3.csv results/table4.csv results/table5.csv \
 	results/table6.txt results/table7.txt results/fig2.png results/fig3.png \
-	reports/student_exam_performance.html \
-	reports/student_exam_performance.pdf
+	report/student_exam_performance.html \
+	report/student_exam_performance.pdf
 
 # generate figures and objects for report
 
@@ -40,17 +40,17 @@ results/table6.txt results/table7.txt results/fig2.png results/fig3.png: scripts
 
 
 # render quarto report in HTML and PDF
-reports/student_exam_performance.html: results reports/student_exam_performance.qmd
-	quarto render reports/student_exam_performance.qmd --to html 
+report/student_exam_performance.html: results report/student_exam_performance.qmd
+	quarto render report/student_exam_performance.qmd --to html 
 
-reports/student_exam_performance.pdf: results reports/student_exam_performance.qmd
-	quarto render reports/student_exam_performance.qmd --to pdf 
+report/student_exam_performance.pdf: results report/student_exam_performance.qmd
+	quarto render report/student_exam_performance.qmd --to pdf 
 
 
 # clean
 clean:
 	rm -rf results/
-	rm -rf reports/student_exam_performance.html \
-		reports/student_exam_performance.pdf \
-		reports/qmd_example_files
+	rm -rf report/student_exam_performance.html \
+		report/student_exam_performance.pdf \
+		report/qmd_example_files
 	rm -rf data/
