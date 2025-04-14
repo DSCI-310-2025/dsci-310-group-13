@@ -1,6 +1,6 @@
-# Predicting Student Exam Performance Based on Study Habits
+# **Predicting Student Exam Performance Based on Study Habits**
 
-## Contributors
+## **Contributors**
 
 This project is developed by **Group 13** as part of the DSCI 310 course:
 
@@ -9,7 +9,7 @@ This project is developed by **Group 13** as part of the DSCI 310 course:
 - **Tracy Wang**
 - **Yuexiang Ni**
 
-## Introduction
+## **Introduction**
 
 The ability to predict student exam performance based on study habits is crucial for understanding effective learning strategies. This project examines how factors like **study time (STG)**, **study repetition (SCG)**, and **study engagement** with **related objects (STR)** influence a **student's exam performance (LPR and PEG)**. The original data set can be found online [here]("https://archive.ics.uci.edu/ml/machine-learning-databases/00257/Data_User_Modeling_Dataset_Hamdi%20Tolga%20KAHRAMAN.xls").
 
@@ -21,9 +21,9 @@ By analyzing these relationships, our study can provide recommendations for stud
 
 > Can we predict a student's exam performance (LPR or PEG) based on their study time and repetition (STG, SCG, STR)?
 
-## Build Data Analysis
+## **Build Data Analysis**
 
-### **Option 1: Using Docker (Recommended)**
+### Option 1: Using Docker (Recommended)
 
 1. **Compose Docker image:**
 
@@ -60,7 +60,7 @@ To run the data analysis, follow these steps:
 - HTML Report: `reports/student_exam_performance.html`
 - PDF  Report: `reports/student_exam_performace.pdf`
 
-### **Option 2: Running Locally (without Docker)**
+### Option 2: Running Locally (without Docker)
 
 1. **Clone the repository to your local machine**:
 
@@ -87,7 +87,7 @@ To run the data analysis, follow these steps:
 make all
 ```
 
-## Data Analysis Pipeline
+## **Data Analysis Pipeline**
 
 This project includes several **R scripts** in the `scripts/` directory that handle different stages of the data analysis pipeline. Below are instructions for running each script.
 
@@ -153,7 +153,7 @@ Rscript scripts/04_modelling.R --file_path="data/clean/data.xls" --table6="resul
 - `--table6` and `--table7`: Paths where the model results tables will be saved
 - `--fig2` and `--fig3`: Paths where the model visualization figures will be saved
 
-## **Makefile***
+## **Makefile**
 
 This project uses a **Makefile** to automate the data pipline.
 
@@ -171,7 +171,8 @@ This will:
 2. Clean and preprocess the data.
 3. Perform exploratory data analysis.
 4. Train and evaluate the model.
-5. Render the final reports.
+5. Validate the cleaned data
+6. Render the final reports.
 
 ### Clean the project directory
 
@@ -186,8 +187,9 @@ This will delete:
 - Downloaded data (`data/`)
 - Generated tables & figures (`results/`)
 - Reports (`reports/out/`)
+- Validation output (`validation/validation_report.html`)
 
-## Dependencies
+## **Dependencies**
 
 The following `R libraries` are installed automatically via **renv**:
 
@@ -205,7 +207,7 @@ library(caret)      # Classification and Regression Training
 library(docopt)
 ```
 
-## Development and Collaboration
+## **Development and Collaboration**
 
 ### Using Docker Compose for Development
 
@@ -230,9 +232,35 @@ To run the tests to make sure that existing functions work as intended, run the 
  Rscript -e "library(testthat); test_dir('test')"
 ```
 
-## License
+## **Project Package: `examperformancetools (v3.0.1)`**
 
-- This project is licensed under the **MIT License**.
-  - For license information, refer to `LICENSE.md`.
-- All non-code items are under the **Creative Commons License 4.0**
-  - <a href="https://creativecommons.org/licenses/by/4.0/"><img src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by.png" alt="CC" width="88" height="34"></a>
+This project makes use of a custom R package called [`examperformancetools`](https://github.com/DSCI-310-2025/examperformancetools), 
+developed to support the functions used in our analysis. It contains:
+
+- Core functions used for summarizing and analyzing the dataset
+- Input validation and error handling
+- Unit tests and documentation
+
+The package is developed and maintained in a separate repository to promote 
+modularity and reusability across projects.
+
+To install it locally, run the following:
+
+```r
+# Clone the package repository
+git clone https://github.com/DSCI-310-2025/examperformancetools.git
+
+# Install the package
+devtools::install("examperformancetools")
+```
+
+## **License**
+
+This project uses **two licenses**:
+
+- **MIT License** for all **software code** in this repository  
+  - See [`LICENSE`](./LICENSE) for full terms.
+
+- **Creative Commons Attribution 4.0 International (CC BY 4.0)** for all **non-code content**  
+  (e.g., text in reports, figures, documentation, etc.)  
+  - See [`LICENSE.md`](./LICENSE.md) or [View License Online](https://creativecommons.org/licenses/by/4.0/)

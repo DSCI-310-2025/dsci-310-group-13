@@ -55,11 +55,10 @@ predicted_classes <- factor(predicted_classes,
                             levels = levels(knowledge_test_data$UNS), 
                             ordered = TRUE)
 
-
 # Table 7
 # Model accuracy
-accuracy_output <- capture.output(mean(predicted_classes == knowledge_test_data$UNS))
-writeLines(accuracy_output, con = table7_path)
+accuracy_value <- mean(predicted_classes == knowledge_test_data$UNS)
+writeLines(as.character(accuracy_value), con = table7_path)
 
 # Confusion matrix
 
