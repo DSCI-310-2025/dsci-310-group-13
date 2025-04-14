@@ -187,6 +187,23 @@ This will delete:
 - Generated tables & figures (`results/`)
 - Reports (`reports/out/`)
 
+
+## Custom Package: `examperformancetools`
+
+To improve modularity and reusability, we developed a custom R package called 
+[`examperformancetools`](https://github.com/DSCI-310-2025/examperformancetools).
+
+This package contains the core functions used in our analysis pipeline, such as:
+
+- `create_summary_table()` – Extracts a quick preview of the dataset
+- `create_percentage_table()` – Computes class distributions of UNS levels
+- `plot_stg_vs_peg_scatter()` – Visualizes the relationship between STG and PEG
+- `create_train_data()` / `create_test_data()` – Data cleaning and type handling
+- and more...
+
+The package is automatically loaded as part of our Docker environment and is used 
+throughout the pipeline in scripts and report rendering.
+
 ## Dependencies
 
 The following `R libraries` are installed automatically via **renv**:
