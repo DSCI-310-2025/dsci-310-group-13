@@ -41,7 +41,7 @@ The dataset consists of six key variables:
 - PEG: Exam performance of the user for goal objects  
 - UNS: Knowledge level of the user (categorical target variable)  
 
-For this study, we focus on STG (study time for goal object materials)** and PEG (exam performance for goal objects)** as primary predictors of student knowledge, represented by the UNS variable, which is classified into four categories: Very Low, Low, Middle, and High. Our objective is to determine whether time spent studying or actual exam performance is a stronger indicator of student knowledge. In other words, from this data we can use study time, and exam performance to predict our own user’s knowledge level and test which is a better determining factor to knowledge level, study time or exam performance. We decided to use these two variables to determine user knowledge because we were curious on what mattered most for students’ knowledge level, study time or how they performed on the exam. This will also in turn let us understand if exams taken place actually evaluate what they are supposed to. If proven we will be able to  implement our model onto similar evaluations at any university to determine if exams are in fact relevant to real-world learnings.
+For this study, we focus on STG (study time for goal object materials)** and PEG (exam performance for goal objects)** as primary predictors of student knowledge, represented by the UNS variable, which is classified into four categories: Very Low, Low, Middle, and High. Our objective is to determine whether time spent studying or actual exam performance is a stronger indicator of student knowledge. In other words, based on this data, we aim to use study time, and exam performance to predict our own user’s knowledge level and test which is a better determining factor to knowledge level, study time or exam performance. We decided to use these two variables to determine user knowledge because we were curious on what mattered most for students’ knowledge level, study time or how they performed on the exam. This, in turn, may help us understand if exams taken place actually evaluate what they are supposed to. If proven we will be able to  implement our model onto similar evaluations at any university to determine if exams are in fact relevant to real-world learnings.
 
 ### Question: 
 Which habit/result is more indicative of a student's knowledge level: the time they spent studying or their actual exam results? <br/>
@@ -107,8 +107,8 @@ know_percentage_test <- read_csv("../results/table4.csv")
 knowledge_train_summary <- read_csv("../results/table5.csv")
 ordinal_model <- read_csv("../results/table6.txt")
 accuracy <- read_csv("../results/table7.txt")
+acc_raw <- readr::read_lines("../results/table7.txt")
 ```
-
 
 ```{r Display Train}
 #| label: tbl-knowledge_train_data
@@ -166,7 +166,7 @@ From @tbl-ordinal_model we see that exam performance has a coefficient nearly fi
 knitr::kable(accuracy)
 ```
 
-Our model produces a mean accuracy of 82% which is promising (see @tbl-accuracy). This means that really only using exam grade as a feature allows ordinal regression to achieve high accuracy across this complex problem.
+Our model produces a mean accuracy of `r round(as.numeric(acc_raw) * 100, 0)`% which is promising (see @tbl-accuracy). This means that really only using exam grade as a feature allows ordinal regression to achieve high accuracy across this complex problem.
 
 Next we produce some visualizations to get a better sense of the data.
 
@@ -180,7 +180,7 @@ In @fig-feature_inportance we again look at how much importance our model gave t
 
 ## **Discussion**
 
-During this analysis we found a model that successfully predicts user knowledge separated by four distinct classes. We saw that when using degree of study time and exam performance as features, exam performance was by far the most useful predictor and dominated the model. This was an unexpected result in terms of the magnitude of importance. We thought that exam performance would probably be the most useful feature out of the two, but not by so much. This shows that the exams taken where this study was conducted is indeed a tell tale sign of user knowledge and that time spent studying, which may increase exam performance, does not tell us much about the users knowledge. 
+During this analysis we found a model that successfully predicts user knowledge separated by four distinct classes. We saw that when using degree of study time and exam performance as features, exam performance was by far the most useful predictor and dominated the model. This was an unexpected result in terms of the magnitude of importance. We hypothesized that exam performance would be the more useful feature out of the two, but not by so much. This shows that the exams taken where this study was conducted is indeed a tell tale sign of user knowledge and that time spent studying, which may increase exam performance, does not tell us much about the users knowledge. 
 
 The impacts this study could bring about are vast. By performing a similar result at other institutions it could be a way of confirming if their testing procedures are representative of real life skills. This is something every test maker hopes to achieve and could be substantiated by a similar result as in this study. 
 
