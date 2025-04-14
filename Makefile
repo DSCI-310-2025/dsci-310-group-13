@@ -6,7 +6,8 @@ all: data/data.xls data/clean/data.xls \
 	results/table1.csv results/table2.csv results/table3.csv results/table4.csv results/table5.csv \
 	results/table6.txt results/table7.txt results/fig2.png results/fig3.png \
 	reports/student_exam_performance.html \
-	reports/student_exam_performance.pdf
+	reports/student_exam_performance.pdf \
+	validation/validation_report.html
 
 # generate figures and objects for report
 
@@ -30,14 +31,12 @@ results/table1.csv results/table2.csv results/table3.csv results/table4.csv resu
 		--table5="./results/table5.csv" \
 		--fig1="./results/fig1.png"
 
-
 results/table6.txt results/table7.txt results/fig2.png results/fig3.png: scripts/04_modelling.R
 	Rscript scripts/04_modelling.R --file_path="./data/clean/data.xls" \
 		--table6="./results/table6.txt" \
 		--table7="./results/table7.txt" \
 		--fig2="./results/fig2.png" \
 		--fig3="./results/fig3.png"
-
 
 # render quarto report in HTML and PDF
 reports/student_exam_performance.html: results reports/student_exam_performance.qmd
@@ -46,6 +45,9 @@ reports/student_exam_performance.html: results reports/student_exam_performance.
 reports/student_exam_performance.pdf: results reports/student_exam_performance.qmd
 	quarto render reports/student_exam_performance.qmd --to pdf 
 
+# validate step
+validation/validation_report.html: results validation/validate_data.R
+	 Rscript validation/validate_data.R
 
 # clean
 clean:
@@ -54,6 +56,7 @@ clean:
 		reports/student_exam_performance.pdf \
 		reports/qmd_example_files
 	rm -rf data/
+	rm -rf validation/validation_report.html
 
 # validate
 validate:
