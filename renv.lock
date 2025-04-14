@@ -1930,7 +1930,7 @@
       "RemoteUsername": "DSCI-310-2025",
       "RemoteRepo": "examperformancetools",
       "RemoteRef": "main",
-      "RemoteSha": "4f517c16bb58125ac9e0c15bf1104b194297f327"
+      "RemoteSha": "210ec1c4ea495cc1a165e0851727aa8ccc786df4"
     },
     "fansi": {
       "Package": "fansi",
