@@ -54,3 +54,7 @@ clean:
 		reports/student_exam_performance.pdf \
 		reports/qmd_example_files
 	rm -rf data/
+
+# validate
+validate:
+	Rscript validation/validate_data.R
