@@ -153,7 +153,7 @@ Rscript scripts/04_modelling.R --file_path="data/clean/data.xls" --table6="resul
 - `--table6` and `--table7`: Paths where the model results tables will be saved
 - `--fig2` and `--fig3`: Paths where the model visualization figures will be saved
 
-## **Makefile***
+## **Makefile**
 
 This project uses a **Makefile** to automate the data pipline.
 
@@ -188,7 +188,7 @@ This will delete:
 - Reports (`reports/out/`)
 
 
-## Custom Package: `examperformancetools`
+## **Custom Package: `examperformancetools`**
 
 To improve modularity and reusability, we developed a custom R package called 
 [`examperformancetools`](https://github.com/DSCI-310-2025/examperformancetools).
@@ -204,7 +204,7 @@ This package contains the core functions used in our analysis pipeline, such as:
 The package is automatically loaded as part of our Docker environment and is used 
 throughout the pipeline in scripts and report rendering.
 
-## Dependencies
+## **Dependencies**
 
 The following `R libraries` are installed automatically via **renv**:
 
@@ -222,7 +222,7 @@ library(caret)      # Classification and Regression Training
 library(docopt)
 ```
 
-## Development and Collaboration
+## **Development and Collaboration**
 
 ### Using Docker Compose for Development
 
@@ -247,7 +247,7 @@ To run the tests to make sure that existing functions work as intended, run the 
  Rscript -e "library(testthat); test_dir('test')"
 ```
 
-## License
+## **License**
 
 - This project is licensed under the **MIT License**.
   - For license information, refer to `LICENSE.md`.
