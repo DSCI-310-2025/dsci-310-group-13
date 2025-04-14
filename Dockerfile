@@ -3,22 +3,12 @@ FROM rocker/verse:4.4.3 AS base
 
 # Install required system dependencies
 RUN apt-get update && apt-get install -y \
-  libcurl4-openssl-dev \
-  libssl-dev \
-  libxml2-dev \
-  libharfbuzz-dev \
-  libfribidi-dev \
-  libgit2-dev \
-  libfontconfig1-dev \
-  libfreetype6-dev \
-  libpng-dev \
-  libtiff5-dev \
-  libjpeg-dev \
-  libbz2-dev \
-  zlib1g-dev \
-  pkg-config \
-  && apt-get clean \
-  && rm -rf /var/lib/apt/lists/*
+  libcurl4-openssl-dev libssl-dev libxml2-dev \
+  libharfbuzz-dev libfribidi-dev libgit2-dev \
+  libfontconfig1-dev libfreetype6-dev libpng-dev \
+  libtiff5-dev libjpeg-dev libbz2-dev zlib1g-dev \
+  pkg-config && \
+  apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
 WORKDIR /home/rstudio/
