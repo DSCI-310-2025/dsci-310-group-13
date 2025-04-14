@@ -232,7 +232,7 @@ To run the tests to make sure that existing functions work as intended, run the 
  Rscript -e "library(testthat); test_dir('test')"
 ```
 
-## **Project Package: `examperformancetools`**
+## **Project Package: `examperformancetools (v3.0.1)`**
 
 This project makes use of a custom R package called [`examperformancetools`](https://github.com/DSCI-310-2025/examperformancetools), 
 developed to support the functions used in our analysis. It contains:
@@ -241,9 +241,10 @@ developed to support the functions used in our analysis. It contains:
 - Input validation and error handling
 - Unit tests and documentation
 
-The package is developed and maintained in a separate repository to promote modularity and reusability across projects.
+The package is developed and maintained in a separate repository to promote 
+modularity and reusability across projects.
 
-You can install it locally using:
+To install it locally, run the following:
 
 ```r
 # Clone the package repository
