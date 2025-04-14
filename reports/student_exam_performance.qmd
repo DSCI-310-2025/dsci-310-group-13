@@ -41,7 +41,7 @@ The dataset consists of six key variables:
 - PEG: Exam performance of the user for goal objects  
 - UNS: Knowledge level of the user (categorical target variable)  
 
-For this study, we focus on STG (study time for goal object materials)** and PEG (exam performance for goal objects)** as primary predictors of student knowledge, represented by the UNS variable, which is classified into four categories: Very Low, Low, Middle, and High. Our objective is to determine whether time spent studying or actual exam performance is a stronger indicator of student knowledge. In other words, from this data we can use study time, and exam performance to predict our own user’s knowledge level and test which is a better determining factor to knowledge level, study time or exam performance. We decided to use these two variables to determine user knowledge because we were curious on what mattered most for students’ knowledge level, study time or how they performed on the exam. This will also in turn let us understand if exams taken place actually evaluate what they are supposed to. If proven we will be able to  implement our model onto similar evaluations at any university to determine if exams are in fact relevant to real-world learnings.<br/>
+For this study, we focus on STG (study time for goal object materials)** and PEG (exam performance for goal objects)** as primary predictors of student knowledge, represented by the UNS variable, which is classified into four categories: Very Low, Low, Middle, and High. Our objective is to determine whether time spent studying or actual exam performance is a stronger indicator of student knowledge. In other words, from this data we can use study time, and exam performance to predict our own user’s knowledge level and test which is a better determining factor to knowledge level, study time or exam performance. We decided to use these two variables to determine user knowledge because we were curious on what mattered most for students’ knowledge level, study time or how they performed on the exam. This will also in turn let us understand if exams taken place actually evaluate what they are supposed to. If proven we will be able to  implement our model onto similar evaluations at any university to determine if exams are in fact relevant to real-world learnings.
 
 ### Question: 
 Which habit/result is more indicative of a student's knowledge level: the time they spent studying or their actual exam results? <br/>
@@ -98,18 +98,27 @@ knowledge_test_data <- knowledge_test_data %>%
 
 ```
 
+```{r load-all-data}
+# Load all preprocessed data
+knowledge_train_data <- read_csv("../results/table1.csv")
+knowledge_test_data <- read_csv("../results/table2.csv")
+know_percentage_train <- read_csv("../results/table3.csv")
+know_percentage_test <- read_csv("../results/table4.csv")
+knowledge_train_summary <- read_csv("../results/table5.csv")
+ordinal_model <- read_csv("../results/table6.txt")
+accuracy <- read_csv("../results/table7.txt")
+```
+
+
 ```{r Display Train}
 #| label: tbl-knowledge_train_data
 #| tbl-cap: "First six rows of the Training Data"
-
-knowledge_train_data <- read_csv("../results/table1.csv")
 knitr::kable(knowledge_train_data)
 ```
 
 ```{r Display Test}
 #| label: tbl-knowledge_test_data
 #| tbl-cap: "First six rows of the Testing Data"
-knowledge_test_data <- read_csv("../results/table2.csv")
 knitr::kable(knowledge_test_data)
 ```
 
@@ -118,14 +127,12 @@ Next, we wanted to see the distribution of knowledge levels within the training 
 ```{r train data info}
 #| label: tbl-know_percentage_train
 #| tbl-cap: "Count and Percent of User Knowledge Levels in the training data."
-know_percentage_train <- read_csv("../results/table3.csv")
 knitr::kable(know_percentage_train)
 ```
 
 ```{r test data info}
 #| label: tbl-know_percentage_test
 #| tbl-cap: "Count and Percent of User Knowledge Levels in the testing data."
-know_percentage_test <- read_csv("../results/table4.csv")
 knitr::kable(know_percentage_test)
 ```
 
@@ -134,7 +141,6 @@ We still wanted to understand our data a bit more. To do so, we wrangled the tra
 ```{r summarize data}
 #| label: tbl-knowledge_train_summary
 #| tbl-cap: "Means, Minimums, and Maximums of Selected Variables in Training Data"
-knowledge_train_summary <- read_csv("../results/table5.csv")
 knitr::kable(knowledge_train_summary)
 ```
 
@@ -149,7 +155,6 @@ In this analysis we chose to use the machine learning method of ordinal logistic
 ```{r Fit Model}
 #| label: tbl-ordinal_model
 #| tbl-cap: "Summary across included features in our fitted model"
-ordinal_model <- read_csv("../results/table6.txt")
 knitr::kable(ordinal_model)
 ```
 
@@ -158,7 +163,6 @@ From @tbl-ordinal_model we see that exam performance has a coefficient nearly fi
 ```{r Predict on test data}
 #| label: tbl-accuracy
 #| tbl-cap: "Model Accuracy"
-accuracy <- read_csv("../results/table7.txt")
 knitr::kable(accuracy)
 ```
 
