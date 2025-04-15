@@ -232,7 +232,7 @@ To run the tests to make sure that existing functions work as intended, run the 
  Rscript -e "library(testthat); test_dir('test')"
 ```
 
-## **Project Package: `examperformancetools (v3.0.1)`**
+## **Project Package: `examperformancetools (v3.0.2)`**
 
 This project makes use of a custom R package called [`examperformancetools`](https://github.com/DSCI-310-2025/examperformancetools), 
 developed to support the functions used in our analysis. It contains:
