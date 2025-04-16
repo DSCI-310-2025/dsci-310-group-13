@@ -25,7 +25,13 @@ By analyzing these relationships, our study can provide recommendations for stud
 
 ### Option 1: Using Docker (Recommended)
 
-1. **Compose Docker image:**
+1. **Pull Docker Image**
+
+   ```bash
+   docker pull tracywxr/dsci310-project
+   ```
+
+2. **Compose Docker image:**
 
    ```bash
    docker compose up
@@ -35,12 +41,12 @@ We ran into many permission errors using docker pull that lead to errors in repr
 
 To run the data analysis, follow these steps:
 
-2. **Login to Local Host**
+3. **Login to Local Host**
 
 - Docker Compose Up started an RStudio Server at <http://localhost:8787>
 - Go to that address to see the environment in a container
 
-3. **Run the analysis**
+4. **Run the analysis**
 
 - In the container terminal, run:
 
@@ -55,7 +61,7 @@ To run the data analysis, follow these steps:
    make clean
    ```
 
-4. **View the outputted report**
+5. **View the outputted report**
 
 - HTML Report: `reports/student_exam_performance.html`
 - PDF  Report: `reports/student_exam_performace.pdf`
